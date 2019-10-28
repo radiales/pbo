@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <!--
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -27,6 +28,24 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    --
+    <div class="col-lg-8">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">@</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+    </div>
+    -->
+    <div class="flavourDiv">
+      <h2>Geschmack</h2>
+      <select>
+        <option>Herzhaft</option>
+        <option>Süß</option>
+        <option>Scharf</option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -54,5 +73,11 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.flavourDiv{
+  margin: 0 auto;
+  background: rgb(69, 151, 206);
+  padding: 10px;
 }
 </style>

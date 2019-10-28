@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!--<img alt="Vue logo" src="./assets/logo.png">-->
+    <span id="headerSalad">🥗</span>
+    <HelloWorld id="helloDiv" msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
@@ -24,5 +25,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#hellDiv{
+  width: 100%;
+}
+
+#headerSalad{
+  font-size: 48pt;
 }
 </style>
