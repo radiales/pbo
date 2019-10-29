@@ -2,6 +2,14 @@
 node_modules
 /dist
 
+
+misc.xml
+modules.xml
+pbo.iml
+vcs.xml
+codeStyleConfig.xml
+package-lock.json
+
 # local env files
 .env.local
 .env.*.local
