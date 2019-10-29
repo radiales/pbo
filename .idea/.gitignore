@@ -10,6 +10,9 @@ vcs.xml
 codeStyleConfig.xml
 package-lock.json
 
+#TEMPORARY for developement purposes:
+App.vue
+
 # local env files
 .env.local
 .env.*.local
