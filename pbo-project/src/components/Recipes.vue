@@ -7,23 +7,23 @@
       <div class="mainDiv">
         <div class="recipesGrpDiv">
            <div class="activeRecipeDiv">  
-              <h3>Pasta <i class="arrow-right"></i> </h3>
+              <h3> Pasta </h3>
             </div>
             <div class="activeRecipeDiv">  
-               <h3> Pasta <i class="arrow-right"></i></h3>
+               <h3> Pasta </h3>
             </div>
             <div class="activeRecipeDiv">  
-               <h3> Pasta <i class="arrow-right"></i></h3>
+               <h3> Pasta </h3>
             </div>
-            <hr></hr>
+            <hr/>
             <div class="inactiveRecipeDiv">  
-              <h3> Pasta <i class="arrow-right"></i> </h3>
-            </div>
-            <div class="inactiveRecipeDiv">  
-               <h3> Pasta <i class="arrow-right"></i></h3>
+              <h3> Pasta </h3>
             </div>
             <div class="inactiveRecipeDiv">  
-               <h3> Pasta <i class="arrow-right"></i></h3>
+               <h3> Pasta </h3>
+            </div>
+            <div class="inactiveRecipeDiv">  
+               <h3> Pasta </h3>
             </div>
         </div>
       </div>
@@ -44,6 +44,7 @@ export default {
 <style scoped>
 h3 {
   margin: 20px 0 0;
+  text-align:left;
 }
 ul {
   list-style-type: none;
@@ -64,38 +65,33 @@ a {
 }
 
 .mainDiv{
-    margin: 0 auto;
-    background: rgb(56, 202, 51);
-    padding: 2px;
+  margin: 0 auto;
+  background: rgb(56, 202, 51);
+  padding: 2px;
 }
 
 .mainDiv hr{
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 8%;
   border-top: 3px solid rgb(38, 138, 35)
 }
 
 .mainDiv h3{
-   margin: 5% auto 5% 5%;
+  margin: 5% auto 5% 5%;
 }
 
 .activeRecipeDiv,
 .inactiveRecipeDiv{
-   margin: 8px auto;
-   width: 30%;
-   cursor: pointer;
+  border-radius: 10px;
+  margin: 8px auto;
+  width: 30%;
+  cursor: pointer;
 }
 
 .activeRecipeDiv{
     border: 1px solid green;
     background-color: rgb(57, 182, 57);    
-}
-
-.activeRecipeDiv i{
-  margin-right: 5%;
-  width: 15px;
-  height: 15px;
-  float: right;
-  box-shadow: -2px 2px 0 rgba(255, 255, 255, .5);
-  transform: rotate(225deg);
 }
 
 .inactiveRecipeDiv{  
@@ -107,29 +103,18 @@ a {
  margin: 5% auto 5% 3%;
 }
 
-.inactiveRecipeDiv i:before,
-.inactiveRecipeDiv i:after{
-  float:right;
-  content: ' '; 
-  width: 2px;
-  box-shadow: -2px 2px 0 rgba(255, 255, 255, .5);
-}
-
-.inactiveRecipeDiv i:before {
- margin-right:5%;
- transform: rotate(45deg);
- height: 22px;
-}
-.inactiveRecipeDiv i:after{
- transform: rotate(-45deg);
- height: 18px;
-}
-
 @media screen and (max-width: 600px) {
   .activeRecipeDiv,
   .inactiveRecipeDiv{
       width: 100%
   }
+
+  .mainDiv hr{
+    margin-top: 8%;
+    margin-bottom: 8%;
+    width: 100%;
+  }
+
 }
 
 </style>

@@ -1,9 +1,13 @@
 <template>
   <div id="app">
     <!--<img alt="Vue logo" src="./assets/logo.png">-->
-    <span id="headerSalad"> 🥗ShareMeal🍔</span>
+    <div class="headerDiv">
+      <span id="headerSalad"> 🥗ShareMeal🍔</span>
+    </div>
+
     <!--<HelloWorld id="helloDiv" msg="Welcome to Your Vue.js App"/>-->
-    <Last id="test" msg="test msg"/>
+    <!--<Last id="test" msg="test msg"/>-->
+    <Recipes id="recipesID" msg="recipes page"/>
   </div>
 </template>
 
@@ -38,5 +42,14 @@ s
 
 #headerSalad{
   font-size: 48pt;
+}
+
+@media screen and (max-width: 600px) {
+  #headerSalad{
+    font-size: 28pt;
+  }
+  .headerDiv{
+    margin-bottom: 5%;
+  }
 }
 </style>
