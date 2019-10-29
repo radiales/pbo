@@ -16,12 +16,16 @@
 import HelloWorld from './components/HelloWorld.vue'
 import Home from "./components/Home.vue"
 
+import Recipes from "./components/Recipes.vue"
+import Last from "./components/Last";
+
 export default {
-	name: 'app',
-	components: {
-		HelloWorld,
-		Home
-	}
+  name: 'app',
+  components: {
+    HelloWorld,
+    Recipes,
+    Last
+  }
 }
 </script>
 
@@ -47,5 +51,14 @@ export default {
 	text-align: left;
 	width: 75%;
 	margin: 0 auto;
+}
+
+@media screen and (max-width: 600px) {
+  #headerSalad{
+    font-size: 28pt;
+  }
+  .headerDiv{
+    margin-bottom: 5%;
+  }
 }
 </style>
