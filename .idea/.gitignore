@@ -12,6 +12,9 @@ package-lock.json
 
 #TEMPORARY for developement purposes:
 App.vue
+router.js
+main.js
+pbo-project/src/views/*
 
 # local env files
 .env.local

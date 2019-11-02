@@ -1,42 +1,61 @@
 <template>
-	<div id="app">
-		<!--<img alt="Vue logo" src="./assets/logo.png">-->
-		<!--<span id="headerSalad">🥗</span>-->
-		<div id="appHeader">
-			<div id="centeredDiv">
-				<h2>MealShare</h2>
-				<h5>What do you want to eat today?</h5>
-			</div>
-		</div>
-		<Home id="homeDiv" msg="testMessage"/>
-	</div>
+  <div id="app">
+    <div id="heading">
+      <div id="headingWrapper">
+        <h2>MealShare</h2>
+        <h4>What do you want to eat today?</h4>
+      </div>
+    </div>
+    <!--
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    -->
+    <router-view/>
+	<Home id="homeSection" msg="test"/>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-import Home from "./components/Home.vue"
-
-import Recipes from "./components/Recipes.vue"
-import Last from "./components/Last";
-
-export default {
-  name: 'app',
-  components: {
-    HelloWorld,
-    Recipes,
-    Last
-  }
-}
-</script>
-
 <style>
+body{
+  margin: 0;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  height: 200vh;
+  background-image: url("../img/bg_new.png");
+  background-attachment: fixed;
+  background-size: 50%;
+}
+
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
-	margin-top: 60px;
+}
+
+#headingWrapper{
+  background: rgba(200,200,200,0.6);
+  backdrop-filter: blur(1px);
+  padding: 5px;
+}
+
+#heading{
+  text-align: left;
+  height: 15vh;
+  background-image: url("../img/food_illustration.jpg");
+  background-size: 100%;
+  background-attachment: fixed;
+}
+
+#heading h2, #heading h4{
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 #hellDiv{
