@@ -6,12 +6,11 @@
         <h4>What do you want to eat today?</h4>
       </div>
     </div>
-    <!--
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/recipes">Recipes</router-link> |
+      <router-link to="/last">Last</router-link>
     </div>
-    -->
     <router-view/>
 	<Home id="homeSection" msg="test"/>
   </div>
