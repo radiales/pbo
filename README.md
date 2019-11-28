@@ -3,5 +3,5 @@
 Projekt von
 
 - Julius Banke (s77034)
-- Kevin Holz
+- Kevin Holz (s77179)
 - Wladislaw Nedzelskij

@@ -11,8 +11,19 @@ import router from './router'
 Vue.config.productionTip = false
 
 //Vue.use(BootstrapVue);
+Vue.component("Home");
+Vue.component("Recipes");
+Vue.component("Last");
 
-new Vue({
+var vueIn = new Vue({
   router,
+  data:{
+    show: false
+  },
+  methods: {
+    updateShowVariable: function(){
+      this.$refs.Home.show = true
+    }
+  },
   render: h => h(App)
 }).$mount('#app')

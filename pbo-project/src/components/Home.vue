@@ -147,7 +147,7 @@
 			</div>
 			<div class="form searchForm">
 				<form>
-					<input type="button" value="Search">
+					<input v-on:click="show = !show" type="button" value="Search">
 				</form>
 			</div>
 		</div>
@@ -159,6 +159,11 @@ export default {
   name: 'Home',
   props: {
     msg: String
+  },
+  data: function(){
+	  return{
+		  show: false
+  		}
   }
 }
 </script>
