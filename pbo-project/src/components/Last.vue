@@ -21,11 +21,10 @@
 
             <div class="Preperations">
 
-                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ultricies, lorem quis posuere egestas, justo felis euismod enim, eget porta turpis risus non quam.
-                    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse laoreet, nisl nec luctus viverra, velit dolor cursus mauris,
-                    sit amet finibus purus purus non quam. Donec id neque quis magna convallis auctor pellentesque a tortor. Vivamus varius elit in mi gravida malesuada. Nam varius velit in
-                    pharetra hendrerit. Duis vehicula laoreet erat. In enim ex, dapibus lobortis lobortis eget, ornare sed erat. Nulla dolor mauris, venenatis ut convallis pellentesque,
-                    convallis mattis urna. Proin vulputate tempus arcu, non convallis leo iaculis et. Ut aliquet fermentum mollis. Sed ullamcorper tempor tempus.
+                <h4>Die Tomaten an der Unterseite kreuzweise anritzen und in eine große Schüssel legen. Mit kochendem oder heißem Wasser übergießen. Nach 10 Minuten vorsichtig die Haut und den grünen Knopf auf der Oberseite von der Tomate entfernen und die geschälten Tomaten klein schneiden.
+
+                    Nun die Zwiebeln klein würfeln und den Knoblauch pressen. Beides in Olivenöl anbraten und nach ca. 3 Minuten die Tomatenstücke hinzugeben. Nach ein paar Minuten die Gemüsebrühe und die Gewürze (ohne die Petersilie) hinzugeben und auf niedriger Temperatur 20 Minuten kochen. Das Tomatenmark unterrühren und die Suppe mit einem Pürierstab fein pürieren.
+                    Nach Belieben mit den Gewürzen abschmecken und mit ein wenig frischer Petersilie servieren.
                 </h4>
             </div>
 
@@ -54,6 +53,7 @@
     }
     li {
         display: inline-block;
+        text-align: left;
         margin: 0 10px;
     }
     a {
@@ -61,18 +61,34 @@
     }
 
     .Header{
-        margin-top: auto;
-        background: rgb(245,199,84);
+        margin: 0 auto;
+        background: rgba(210, 210, 210, 0.4);
+        border-radius: 15px;
         padding: 20px;
+        margin-top: 15px;
+        width: 70%;
+        backdrop-filter: blur(5px);
+        border-color: transparent!important;
     }
     .Recipe{
         margin: 0 auto;
-        background: rgb(175,199,84);
+        text-align: left;
+        background: rgba(210, 210, 210, 0.4);
+        border-radius: 15px;
         padding: 20px;
+        margin-top: 15px;
+        width: 70%;
+        backdrop-filter: blur(5px);
+        border-color: transparent!important;
     }
     .Preperations{
         margin: 0 auto;
-        background: rgb(140,199,84);
+        background: rgba(210, 210, 210, 0.4);
+        border-radius: 15px;
         padding: 20px;
+        margin-top: 15px;
+        width: 70%;
+        backdrop-filter: blur(5px);
+        border-color: transparent!important;
     }
 </style>

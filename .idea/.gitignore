@@ -33,3 +33,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+# Default ignored files
+/workspace.xml
