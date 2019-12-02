@@ -11,14 +11,10 @@
       <router-link to="/recipes">Recipes</router-link> |
       <router-link to="/last">Last</router-link>
     </div>
-    <transition
-      name="slide-fade"
-    >
+    <transition name="slide-fade">
       <router-view v-if="!show" class="view"></router-view>
     </transition>
-    <transition
-      name="slide-fade"
-      >
+    <transition name="slide-fade">
       <router-view v-if="show" class="view"  name="recipesView"></router-view>
     </transition>
     <transition

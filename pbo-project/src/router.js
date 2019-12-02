@@ -16,6 +16,18 @@ export default new Router({
         recipeView: Recipes,
         lastView:   Last
       }
+    },
+    {
+      path: "/recipes",
+      components: {
+        default: Recipes
+      }
+    },
+    {
+      path: "/last",
+      components: {
+        default: Last
+      }
     }
   ]
 

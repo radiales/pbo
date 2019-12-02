@@ -159,12 +159,14 @@ export default {
   name: 'Home',
   props: {
     msg: String
-  },
+  }
+  /*,
   data: function(){
 	  return{
 		  show: false
   		}
   }
+  */
 }
 </script>
 
