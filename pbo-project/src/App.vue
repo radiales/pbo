@@ -11,10 +11,10 @@
       <router-link to="/recipes">Recipes</router-link> |
       <router-link to="/last">Last</router-link>
     </div>
-    <transition name="slide-fade">
-      <router-view v-if="!show" class="view"></router-view>
+    <transition name="slide-fade" mode="out-in">
+      <router-view v-if="!show" class="view" @onShowChanged="updateShow"></router-view>
     </transition>
-    <transition name="slide-fade">
+    <transition name="slide-fade" mode="in-out">
       <router-view v-if="show" class="view"  name="recipesView"></router-view>
     </transition>
     <transition
@@ -24,11 +24,6 @@
       >
       <router-view v-if="show" class="view" name="lastView"></router-view>
     </transition>
-  <!--
-	<Home id="homeSection" msg="test"/>
-  <Recipes id="recipesSection" msg="test"/>
-  <Last id="lastSection" msg="test"/>
-  -->
   </div>
 </template>
 
@@ -74,15 +69,21 @@ body{
 }
 
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-fade-enter, .slide-fade-leave-to
+
+.slide-fade-enter
 {
-  transform: translateX(10px);
-  opacity: 0;
+  transform: translateX(100px);
+  
+}
+
+.slide-fade-leave-to{
+  transform: translateX(-100px);
+  
 }
 
 #app {
@@ -155,6 +156,11 @@ export default{
     'Home': Home,
     "Recipes": Recipes,
     "Last": Last
+  },
+  methods:{
+    updateShow(val){
+      this.show = val;
+    }
   },
   data:function(){
     return{

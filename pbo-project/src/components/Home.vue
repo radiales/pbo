@@ -1,78 +1,7 @@
 <template>
 	<div class="landingPage">
-		<!--
 		<div>
 			<form class="tasteForm form">
-				<div class="tasteGroup">
-					<input type="radio" id="sweet" value="süß"/>
-					<label for="sweet">süß</label>
-				</div>
-				<div class="tasteGroup">
-					<input type="radio" id="herzhaft" value="herzhaft"/>
-					<label for="herzhaft">herzhaft</label>
-				</div>
-				<div class="tasteGroup">
-					<input type="radio" id="spicy" value="spicy"/>
-					<label for="spicy">spicy</label>
-				</div>
-			</form>
-			<form class="countForm form">
-				<label>Für wie viele Personen?</label><br>
-				<input class="textInput" id="peopleCountInput" type="number">
-			</form>
-			<div class="form">
-				<form>
-					<input type="checkbox">
-					<label>vegetarisch</label>
-					<input type="checkbox">
-					<label>vegan</label>
-					<br>
-					<input type="checkbox">
-					<label>glutenfrei</label>
-					<input type="checkbox">
-					<label>laktosefrei</label>
-				</form>
-			</div>
-			<div class="form">
-				<label>Zutaten</label>
-				<div class="ingredients chosenParent">
-					<span class="availabilityLabel">Ausgewählt:</span>
-					<div class="chosen ingredientsGroup">
-						<span class="ingredient">Tomaten</span>
-						<span class="ingredient">Schinkenwürfel</span>
-						<span class="ingredient">Streukäse</span>
-						<span class="ingredient">Blattsalat</span>
-					</div>				
-				</div>
-				<div class="ingredients availableParent">
-					<span class="availabilityLabel">Verfügbar</span>
-					<form>
-						<input class="textInput" type="text" placeholder="Suchen...">
-					</form>
-					<div class="available ingredientsGroup">
-						<span class="ingredient">Spinat</span>
-						<span class="ingredient">Gurken</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		-->
-		<div>
-			<form class="tasteForm form">
-				<!--
-				<div class="tasteGroup">
-					<input type="radio" id="sweet" value="süß"/>
-					<label for="sweet">süß</label>
-				</div>
-				<div class="tasteGroup">
-					<input type="radio" id="herzhaft" value="herzhaft"/>
-					<label for="herzhaft">herzhaft</label>
-				</div>
-				<div class="tasteGroup">
-					<input type="radio" id="spicy" value="spicy"/>
-					<label for="spicy">spicy</label>
-				</div>
-				-->
 				<input type="radio" name="taste" value="suess" id="suess">
 				<label for="suess">süß</label>
 				<input type="radio" name="taste" value="herzhaft" id="herzhaft">
@@ -82,19 +11,10 @@
 			
 			</form>
 			<form class="countForm form">
-				<label>Für wie viele Personen?</label><br>
-				<input type="radio" name="count" value="1" id="count1">
-				<label class="noLabel" for="count1">1</label>
-				<input type="radio" name="count" value="2" id="count2">
-				<label class="noLabel" for="count2">2</label>
-				<input type="radio" name="count" value="3" id="count3">
-				<label class="noLabel" for="count3">3</label>
-				<input type="radio" name="count" value="4" id="count4">
-				<label class="noLabel" for="count4">4</label>
-				<input type="radio" name="count" value="5" id="count5">
-				<label class="noLabel" for="count5">5</label>
-				<input type="radio" name="count" value="6" id="count6">
-				<label class="noLabel" for="count6">6</label>
+				<div class="peopleCountWrapper" v-for="i in peopleCount" v-bind:key="i">
+					<input type="radio" name="count" :value="i" :id="'count'+i">
+					<label class="noLabel" :for="'count'+i">{{ i }}</label>
+				</div>
 				<br>
 				<hr>
 				<label>Andere Anzahl:</label><br>
@@ -147,7 +67,7 @@
 			</div>
 			<div class="form searchForm">
 				<form>
-					<input v-on:click="show = !show" type="button" value="Search">
+					<input v-on:click="nextPage" type="button" value="Search">
 				</form>
 			</div>
 		</div>
@@ -157,16 +77,25 @@
 <script>
 export default {
   name: 'Home',
-  props: {
-    msg: String
-  }
-  /*,
+  props: ['show'],
+  methods: {
+	  nextPage(){
+		  this.doShow = !this.doShow;
+		  this.$emit("onShowChanged", this.doShow);
+		  /*
+		   * We don't want to mutate the prop 'show' because its value will change
+		   * on re-render of the parent element. So instead we mirror it on a local
+		   * variable and then emit the change of the local variable back to the 
+		   * original prop to pass to the parent.
+		   */
+	  }
+  },
   data: function(){
 	  return{
-		  show: false
+		  doShow: this.show,
+		  peopleCount: [1,2,3,4,5,6]
   		}
-  }
-  */
+  	}
 }
 </script>
 
@@ -208,6 +137,10 @@ export default {
 .countForm input[type="radio"]:checked + .noLabel{
 	background: rgb(69, 126, 201);
 	color: white;
+}
+
+.peopleCountWrapper{
+	display: inline;
 }
 
 .noLabel{
