@@ -49,18 +49,20 @@
 				<div class="ingredients chosenParent">
 					<span class="availabilityLabel">Ausgewählt:</span>
 					<div class="chosen ingredientsGroup">
-						<span 
-							v-for="(ingredient, id) in availableIngredients" 
-							:key="id" 
-							v-bind:id="id"
-							@click="addUnavailable($event, id)">
-							<Selectable
-								class="selectable"
-								v-bind:ingredientName="ingredient.name" 
-								v-bind:amount="ingredient.amount"
-								v-bind:available="ingredient.available">
-							</Selectable>
-						</span>
+						<transition-group name="fade" tag="span">
+							<span 
+								v-for="(ingredient, id) in availableIngredients" 
+								:key="id" 
+								v-bind:id="id"
+								@click="addUnavailable($event, id)">
+								<Selectable
+									class="selectable"
+									v-bind:ingredientName="ingredient.name" 
+									v-bind:amount="ingredient.amount"
+									v-bind:available="ingredient.available">
+								</Selectable>
+							</span>
+						</transition-group>
 					</div>				
 				</div>
 				<div class="ingredients availableParent">
@@ -70,18 +72,20 @@
 					</form>
 					<div class="available ingredientsGroup">
 						<div class="chosen ingredientsGroup">
-						<span 
-							v-for="(ingredient, id) in unavailableIngredients" 
-							:key="id" 
-							v-bind:id="id"  
-							@click="addAvailable($event, id)">
-							<Selectable
-								class="selectable"
-								v-bind:ingredientName="ingredient.name" 
-								v-bind:amount="ingredient.amount"
-								v-bind:available="ingredient.available">
-							</Selectable>
-						</span>
+						<transition-group name="fade" tag="span">
+							<span 
+								v-for="(ingredient, id) in unavailableIngredients" 
+								:key="id" 
+								v-bind:id="id"  
+								@click="addAvailable($event, id)">
+								<Selectable
+									class="selectable"
+									v-bind:ingredientName="ingredient.name" 
+									v-bind:amount="ingredient.amount"
+									v-bind:available="ingredient.available">
+								</Selectable>
+							</span>
+						</transition-group>
 					</div>	
 					</div>
 				</div>
@@ -179,6 +183,14 @@ export default {
 </script>
 
 <style scoped>
+
+.fade-enter-active, .fade-leave-active {
+	transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+	opacity: 0;
+}
+
 .tasteForm label{
 	margin: 10px;
 	padding: 10px;
