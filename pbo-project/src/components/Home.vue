@@ -2,42 +2,42 @@
 	<div class="landingPage">
 		<div>
 			<form class="tasteForm form">
-				<input type="radio" name="taste" value="suess" id="suess">
+				<input type="radio" name="taste" value="suess" id="suess" v-model="taste">
 				<label for="suess">süß</label>
-				<input type="radio" name="taste" value="herzhaft" id="herzhaft">
+				<input type="radio" name="taste" value="herzhaft" id="herzhaft" v-model="taste">
 				<label for="herzhaft">herzhaft</label>
-				<input type="radio" name="taste" value="spicy" id="spicy">
+				<input type="radio" name="taste" value="spicy" id="spicy" v-model="taste">
 				<label for="spicy">spicy</label>
 			
 			</form>
 			<form class="countForm form">
 				<div class="peopleCountWrapper" v-for="i in peopleCount" v-bind:key="i">
-					<input type="radio" name="count" :value="i" :id="'count'+i">
+					<input type="radio" name="count" :value="i" :id="'count'+i" v-model="selectedPeopleCount">
 					<label class="noLabel" :for="'count'+i">{{ i }}</label>
 				</div>
 				<br>
 				<hr>
 				<label>Andere Anzahl:</label><br>
-				<input onchange="if(this.value=='') this.style.background = 'default'; else this.style.background = 'rgb(69, 126, 201)';" class="textInput" id="peopleCountInput" type="number">
+				<input onchange="if(this.value=='') this.style.background = 'default'; else this.style.background = 'rgb(69, 126, 201)';" v-model="selectedPeopleCount" class="textInput" id="peopleCountInput" type="number">
 			</form>
 			<div class="form constraintForm">
-				<input type="checkbox" name="constraint" value="vegan" id="vegan">
+				<input type="checkbox" name="constraint" value="vegan" id="vegan" v-model="contraints.vegan">
 				<label for="vegan" class="constraint selectable vegan">
 					<img class="constraintimg" src="../../img/vegan.png">
 					<span>vegan</span>
 				</label>
-				<input type="checkbox" name="constraint" value="veggie" id="veggie">
+				<input type="checkbox" name="constraint" value="veggie" id="veggie" v-model="contraints.veggie">
 				<label for="veggie" class="constraint selectable veggie">
 					<img class="constraintimg" src="../../img/veggie.png">
 					<span>vegetarisch</span>	
 				</label>
 				<br>
-				<input type="checkbox" name="constraint" value="glutenfree" id="glutenfree">
+				<input type="checkbox" name="constraint" value="glutenfree" id="glutenfree" v-model="contraints.glutenfree">
 				<label for="glutenfree" class="constraint selectable glutenfree">
 					<img class="constraintimg" src="../../img/glutenfree.png">
 					<span>glutenfrei</span>
 				</label>
-				<input type="checkbox" name="constraint" value="lactosefree" id="lactosefree">
+				<input type="checkbox" name="constraint" value="lactosefree" id="lactosefree" v-model="contraints.lactosefree">
 				<label for="lactosefree" class="constraint selectable lactosefree">
 					<img class="constraintimg" src="../../img/lactosefree.png">
 					<span>laktosefrei</span>
@@ -107,6 +107,14 @@ export default {
 	  return{
 		doShow: this.show,
 		peopleCount: [1,2,3,4,5,6],
+		selectedPeopleCount: 0,
+		taste: "",
+		contraints:{
+			vegan: false,
+			veggie: false,
+			glutenfree: false,
+			lactosefree: false
+		},
 		filterString: "",
 		ingredients: [
 				{
