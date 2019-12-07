@@ -143,20 +143,11 @@ body{
 </style>
 
 <script>
-import Home     from "./components/Home.vue"
-import Recipes  from "./components/Recipes.vue"
-import Last     from "./components/Last.vue"
-
 function animate(){
   document.querySelector("#recipesSection").classList += "animationTest";
 }
 
 export default{
-  components:{
-    'Home': Home,
-    "Recipes": Recipes,
-    "Last": Last
-  },
   methods:{
     updateShow(val){
       this.show = val;

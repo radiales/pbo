@@ -1,8 +1,8 @@
-import Vue      from 'vue'
-import Router   from 'vue-router'
-import Home     from './components/Home.vue'
-import Recipes  from "./components/Recipes.vue"
-import Last     from "./components/Last"
+import Vue        from 'vue'
+import Router     from 'vue-router'
+import Home       from './components/Home.vue'
+import Recipes    from "./components/Recipes.vue"
+import Last       from "./components/Last"
 
 Vue.use(Router)
 
@@ -14,7 +14,7 @@ export default new Router({
       components: {
         default:    Home,
         recipeView: Recipes,
-        lastView:   Last
+        lastView:   Last,
       },
       props: {default: true, recipeView: false, lastView: false}
     },

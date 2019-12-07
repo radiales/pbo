@@ -45,23 +45,44 @@
 			</div>
 			<div class="form ingredientsForm">
 				<label>Zutaten</label>
+				<br>
 				<div class="ingredients chosenParent">
 					<span class="availabilityLabel">Ausgewählt:</span>
 					<div class="chosen ingredientsGroup">
-						<span class="ingredient">Tomaten</span>
-						<span class="ingredient">Schinkenwürfel</span>
-						<span class="ingredient">Streukäse</span>
-						<span class="ingredient">Blattsalat</span>
+						<span 
+							v-for="(ingredient, id) in availableIngredients" 
+							:key="id" 
+							v-bind:id="id"
+							@click="addUnavailable($event, id)">
+							<Selectable
+								class="selectable"
+								v-bind:ingredientName="ingredient.name" 
+								v-bind:amount="ingredient.amount"
+								v-bind:available="ingredient.available">
+							</Selectable>
+						</span>
 					</div>				
 				</div>
 				<div class="ingredients availableParent">
 					<span class="availabilityLabel">Verfügbar</span>
 					<form>
-						<input class="textInput" type="text" placeholder="Suchen...">
+						<input class="textInput" v-model="filterString" type="text" placeholder="Suchen...">
 					</form>
 					<div class="available ingredientsGroup">
-						<span class="ingredient">Spinat</span>
-						<span class="ingredient">Gurken</span>
+						<div class="chosen ingredientsGroup">
+						<span 
+							v-for="(ingredient, id) in unavailableIngredients" 
+							:key="id" 
+							v-bind:id="id"  
+							@click="addAvailable($event, id)">
+							<Selectable
+								class="selectable"
+								v-bind:ingredientName="ingredient.name" 
+								v-bind:amount="ingredient.amount"
+								v-bind:available="ingredient.available">
+							</Selectable>
+						</span>
+					</div>	
 					</div>
 				</div>
 			</div>
@@ -78,7 +99,55 @@
 export default {
   name: 'Home',
   props: ['show'],
-  methods: {
+  data: function(){
+	  return{
+		doShow: this.show,
+		peopleCount: [1,2,3,4,5,6],
+		filterString: "",
+		ingredients: [
+				{
+					name: "Tomaten",
+					amount: 300,
+					available: true
+				},
+				{
+					name: "Spinat",
+					amount: 500,
+					available: true
+				},
+				{
+					name: "Zwiebeln",
+					amount: 3,
+					available: false
+				},
+				{
+					name: "Nudeln",
+					amount: 1000,
+					available: false
+				},
+				{
+					name: "Lachsfilet",
+					amount: 500,
+					available: false
+				},
+				{
+					name: "Salat",
+					amount: 500,
+					available: false
+				}
+			]
+  		}
+	},
+	computed:{
+		availableIngredients(){
+			return this.ingredients.filter(x => x.available);
+		},
+		unavailableIngredients(){
+				return this.ingredients.filter(x => (!(x.available) && 
+					((this.filterString=="")?true:(x.name.toLowerCase().indexOf(this.filterString.toLowerCase())!=-1))));
+		}
+	},
+	methods: {
 	  nextPage(){
 		  this.doShow = !this.doShow;
 		  this.$emit("onShowChanged", this.doShow);
@@ -88,14 +157,24 @@ export default {
 		   * variable and then emit the change of the local variable back to the 
 		   * original prop to pass to the parent.
 		   */
+	  },
+	  addAvailable(event, id){
+		  for(let ingr of this.ingredients){
+			  if(ingr.name == this.unavailableIngredients[id].name){
+				  ingr.available = !(ingr.available);
+				  return;
+			  }
+		  }
+	  },
+	  addUnavailable(event, id){
+		  for(let ingr of this.ingredients){
+			  if(ingr.name == this.availableIngredients[id].name){
+				  ingr.available = !(ingr.available);
+				  return;
+			  }
+		  }
 	  }
   },
-  data: function(){
-	  return{
-		  doShow: this.show,
-		  peopleCount: [1,2,3,4,5,6]
-  		}
-  	}
 }
 </script>
 
@@ -148,9 +227,7 @@ export default {
 	padding: 10px;
 	border-radius: 5px;
 	margin: 5px;
-	/*background: rgb(29, 86, 161);*/
 	backdrop-filter: blur(10px);
-	/*color: white;*/
 }
 
 .form{
@@ -196,7 +273,11 @@ export default {
 }
 
 .ingredients{
-	display: inline-block;
+	display: block;
+}
+
+Selectable{
+	display: inline;
 }
 
 .availabilityLabel{
@@ -206,30 +287,21 @@ export default {
 .ingredientsGroup{
 	margin-top: 10px;
 	margin-bottom: 10px;
-	/*color: white;*/
 }
 
 .ingredient{
-	/*
-	background:rgb(29, 86, 161);
-	border: 1px solid rgb(29, 86, 161);
-	*/
 	border-radius: 5px;
 	padding: 5px;
 	margin: 10px;
-	float: left;
 }
 
-.chosen span {
+.chosen .selectable{
 	background: rgb(69, 126, 201);
 	color: white;
 }
 
 .available > *{
-	/*
-	border: rgb(59, 127, 216);
-	background: rgb(59, 127, 216);
-	*/
+	border-radius: 15px;
 	backdrop-filter: blur(10px);
 }
 

@@ -7,6 +7,7 @@ import router from './router'
 //import '../node_modules/bootstrap/dist/css/bootstrap.css'
 //import '../node_modules/bootstrap-vue/dist/bootstrap-vue.css'
 
+import Selectable from "./components/Selectable"
 
 Vue.config.productionTip = false
 
@@ -14,6 +15,11 @@ Vue.config.productionTip = false
 Vue.component("Home");
 Vue.component("Recipes");
 Vue.component("Last");
+/*
+ * FIX for non-registered components bug I
+ * had before. 
+*/
+Vue.component("Selectable", Selectable);
 
 var vueIn = new Vue({
   router,
