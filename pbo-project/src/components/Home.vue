@@ -20,8 +20,17 @@
 				<label>Andere Anzahl:</label><br>
 				<input onchange="if(this.value=='') this.style.background = 'default'; else this.style.background = 'rgb(69, 126, 201)';" v-model="selectedPeopleCount" class="textInput" id="peopleCountInput" type="number">
 			</form>
-			<div class="form constraintForm">
-				<input type="checkbox" name="constraint" value="vegan" id="vegan" v-model="contraints.vegan">
+			<div class="form">
+				<form class="constraintForm">
+					<span v-for="(constraint, id) in constraints" :key="id" class="constraint">
+						<Constraint
+							v-bind:name="constraint"
+							:constraints="contraints"
+						>
+						</Constraint>
+					</span>
+				</form>
+				<!-- <input type="checkbox" name="constraint" value="vegan" id="vegan" v-model="contraints.vegan">
 				<label for="vegan" class="constraint selectable vegan">
 					<img class="constraintimg" src="../../img/vegan.png">
 					<span>vegan</span>
@@ -41,7 +50,7 @@
 				<label for="lactosefree" class="constraint selectable lactosefree">
 					<img class="constraintimg" src="../../img/lactosefree.png">
 					<span>laktosefrei</span>
-				</label>
+				</label> -->
 			</div>
 			<div class="form ingredientsForm">
 				<label>Zutaten</label>
@@ -109,6 +118,7 @@ export default {
 		peopleCount: [1,2,3,4,5,6],
 		selectedPeopleCount: 0,
 		taste: "",
+		constraints: ["vegan", "veggie", "glutenfree", "lactosefree"],
 		contraints:{
 			vegan: false,
 			veggie: false,
@@ -157,6 +167,9 @@ export default {
 		unavailableIngredients(){
 				return this.ingredients.filter(x => (!(x.available) && 
 					((this.filterString=="")?true:(x.name.toLowerCase().indexOf(this.filterString.toLowerCase())!=-1))));
+		},
+		_contraints(){
+			return this.constraints;
 		}
 	},
 	methods: {
@@ -259,7 +272,7 @@ export default {
 	width: 70%;
 	backdrop-filter: blur(5px);
 }
-
+/*
 .constraintForm input[type="checkbox"]{
 	display: none;
 }
@@ -276,6 +289,12 @@ export default {
 	padding-top: 5px;
 	margin: 5px;
 }
+*/
+
+.constraint{
+	width: 30vw;
+	display: inline-block;
+}
 
 .selectable{
 	background-size: contain;
@@ -286,10 +305,6 @@ export default {
 	padding: 10px;
 	border-radius: 15px;
 	display: inline-table;
-}
-
-.constraintimg{
-	width: 100%;
 }
 
 .ingredients{
