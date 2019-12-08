@@ -6,12 +6,6 @@
 					<input type="radio" v-bind:name="taste" v-bind:value="taste" v-bind:id="taste" v-model="tasteString">
 					<label v-bind:for="taste">{{ taste }}</label>	
 				</span>
-				<!-- <input type="radio" name="taste" value="suess" id="suess" v-model="taste">
-				<label for="suess">süß</label>
-				<input type="radio" name="taste" value="herzhaft" id="herzhaft" v-model="taste">
-				<label for="herzhaft">herzhaft</label>
-				<input type="radio" name="taste" value="spicy" id="spicy" v-model="taste">
-				<label for="spicy">spicy</label> -->
 			</form>
 			<form class="countForm form">
 				<div class="peopleCountWrapper" v-for="i in peopleCount" v-bind:key="i">
