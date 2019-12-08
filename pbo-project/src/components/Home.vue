@@ -30,27 +30,6 @@
 						</Constraint>
 					</span>
 				</form>
-				<!-- <input type="checkbox" name="constraint" value="vegan" id="vegan" v-model="contraints.vegan">
-				<label for="vegan" class="constraint selectable vegan">
-					<img class="constraintimg" src="../../img/vegan.png">
-					<span>vegan</span>
-				</label>
-				<input type="checkbox" name="constraint" value="veggie" id="veggie" v-model="contraints.veggie">
-				<label for="veggie" class="constraint selectable veggie">
-					<img class="constraintimg" src="../../img/veggie.png">
-					<span>vegetarisch</span>	
-				</label>
-				<br>
-				<input type="checkbox" name="constraint" value="glutenfree" id="glutenfree" v-model="contraints.glutenfree">
-				<label for="glutenfree" class="constraint selectable glutenfree">
-					<img class="constraintimg" src="../../img/glutenfree.png">
-					<span>glutenfrei</span>
-				</label>
-				<input type="checkbox" name="constraint" value="lactosefree" id="lactosefree" v-model="contraints.lactosefree">
-				<label for="lactosefree" class="constraint selectable lactosefree">
-					<img class="constraintimg" src="../../img/lactosefree.png">
-					<span>laktosefrei</span>
-				</label> -->
 			</div>
 			<div class="form ingredientsForm">
 				<label>Zutaten</label>
