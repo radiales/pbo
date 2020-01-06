@@ -28,7 +28,12 @@ Vue.component("Constraint", Constraint);
 var vueIn = new Vue({
   router,
   data:{
-    show: false
+    show: {
+      home:     true,
+      recipes:  false,
+      last:     false,
+      share:    false
+    }
   },
   methods: {
     updateShowVariable: function(){

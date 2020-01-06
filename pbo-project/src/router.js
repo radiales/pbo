@@ -15,8 +15,8 @@ export default new Router({
         default:    Home,
         recipeView: Recipes,
         lastView:   Last,
-      },
-      props: {default: true, recipeView: false, lastView: false}
+      }//,
+      //props: {default: true, recipeView: false, lastView: false}
     },
     {
       path: "/recipes",

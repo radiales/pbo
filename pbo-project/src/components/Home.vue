@@ -77,7 +77,7 @@
 			</div>
 			<div class="form searchForm">
 				<form>
-					<input v-on:click="nextPage" type="button" value="Search">
+					<input v-on:click="nextPage('recipes')" type="button" value="Search">
 				</form>
 			</div>
 		</div>
@@ -150,8 +150,9 @@ export default {
 		}
 	},
 	methods: {
-	  nextPage(){
-		  this.doShow = !this.doShow;
+	  nextPage(key){
+		  this.doShow[key] = !this.doShow[key];
+		  this.doShow['home'] = false;
 		  this.$emit("onShowChanged", this.doShow);
 		  /*
 		   * We don't want to mutate the prop 'show' because its value will change

@@ -12,17 +12,17 @@
       <router-link to="/last">Last</router-link>
     </div>
     <transition name="slide-fade" mode="out-in">
-      <router-view v-if="!show" class="view" @onShowChanged="updateShow"></router-view>
+      <router-view v-if="show.home" v-bind:show="show" class="view" @onShowChanged="updateShow"></router-view>
     </transition>
     <transition name="slide-fade" mode="in-out">
-      <router-view v-if="show" class="view"  name="recipesView"></router-view>
+      <router-view v-if="show.recipes" v-bind:show="show" class="view"  name="recipeView"></router-view>
     </transition>
     <transition
       name="lastTransition"
       enter-active-class="last-start"
       leave-active-class="last-leave"
       >
-      <router-view v-if="show" class="view" name="lastView"></router-view>
+      <router-view v-if="show.last" v-bind:show="show" class="view" name="lastView"></router-view>
     </transition>
   </div>
 </template>
@@ -155,7 +155,12 @@ export default{
   },
   data:function(){
     return{
-      show: false
+      show: {
+        home:     true,
+        recipes:  false,
+        last:     false,
+        share:    false
+      }
     }
   }
 }

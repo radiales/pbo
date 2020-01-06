@@ -6,24 +6,12 @@
 
       <div class="mainDiv">
         <div class="recipesGrpDiv">
-           <div class="activeRecipeDiv">  
-              <h3> Pasta </h3>
-            </div>
-            <div class="activeRecipeDiv">  
-               <h3> Pasta </h3>
-            </div>
-            <div class="activeRecipeDiv">  
-               <h3> Pasta </h3>
+           <div v-for="meal in meals.available" v-bind:key="meal" class="activeRecipeDiv" v-on:click="nextPage('last')">  
+              <h3> {{ meal }} </h3>
             </div>
             <hr/>
-            <div class="inactiveRecipeDiv">  
-              <h3> Pasta </h3>
-            </div>
-            <div class="inactiveRecipeDiv">  
-               <h3> Pasta </h3>
-            </div>
-            <div class="inactiveRecipeDiv">  
-               <h3> Pasta </h3>
+            <div v-for="meal in meals.unavailable" v-bind:key="meal" class="inactiveRecipeDiv" v-on:click="nextPage('last')">  
+              <h3> {{ meal }} </h3>
             </div>
         </div>
       </div>
@@ -34,8 +22,30 @@
 <script>
 export default {
   name: 'Recipes',
-  props: {
-    msg: String
+  props: ['show'],
+  data: function(){
+    return{
+      doShow: this.show,
+      meals:{
+        available:[
+          "Pasta carbonara",
+          "Nudelauflauf",
+          "Spätzle"
+        ],
+        unavailable:[
+          "Gemüseauflauf",
+          "Cordon bleu",
+          "French toast"
+        ]
+      }
+    }
+  },
+  methods:{
+    nextPage(val){
+      this.doShow[val] = !this.doShow[val];
+		  this.doShow['recipes'] = false;
+		  this.$emit("onShowChanged", this.doShow);
+    }
   }
 }
 </script>
@@ -60,13 +70,13 @@ a {
 
 .titleDiv{
   margin: 0 auto;
-  background: rgb(69, 151, 206);
+  background: rgba(200,200,200,0.4);
+	backdrop-filter: blur(10px);
   padding: 10px;
 }
 
 .mainDiv{
   margin: 0 auto;
-  background: rgb(56, 202, 51);
   padding: 2px;
 }
 
@@ -74,11 +84,11 @@ a {
   margin-top: 2%;
   margin-bottom: 2%;
   width: 8%;
-  border-top: 3px solid rgb(38, 138, 35)
 }
 
 .mainDiv h3{
-  margin: 5% auto 5% 5%;
+  text-align: center;
+  padding-top: 15px;
 }
 
 .activeRecipeDiv,
@@ -90,29 +100,26 @@ a {
 }
 
 .activeRecipeDiv{
-    border: 1px solid green;
-    background-color: rgb(57, 182, 57);    
+    background: rgba(200,200,200,0.4);
+	  backdrop-filter: blur(10px);
 }
 
 .inactiveRecipeDiv{  
-  border: 1px solid green;
-  background-color: rgb(119, 170, 119);
-}
-
-.inactiveRecipeDiv h3{  
- margin: 5% auto 5% 3%;
+  background: rgba(100,100,100,0.4);
+	backdrop-filter: blur(10px);
 }
 
 @media screen and (max-width: 600px) {
   .activeRecipeDiv,
   .inactiveRecipeDiv{
-      width: 100%
+      width: 90%;
+      height: 50px;
   }
 
   .mainDiv hr{
     margin-top: 8%;
     margin-bottom: 8%;
-    width: 100%;
+    width: 50%;
   }
 
 }
