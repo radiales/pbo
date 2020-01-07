@@ -2,27 +2,28 @@
 	<div class="landingPage">
 		<div>
 			<form class="tasteForm form">
-				<span v-for="(taste, id) in tastes" v-bind:key="id">
-					<input type="radio" v-bind:name="taste" v-bind:value="taste" v-bind:id="taste" v-model="tasteString">
-					<label v-bind:for="taste">{{ taste }}</label>	
+				<span v-for="(taste, id) in tastes" :key="id">
+					<input type="radio" :name="taste" :value="taste" :id="taste" v-model="tasteString">
+					<label :for="taste">{{ taste }}</label>	
 				</span>
 			</form>
 			<form class="countForm form">
-				<div class="peopleCountWrapper" v-for="i in peopleCount" v-bind:key="i">
-					<input type="radio" name="count" :value="i" :id="'count'+i" v-model="selectedPeopleCount">
+				<div class="peopleCountWrapper" v-for="i in peopleCount" :key="i">
+					<input type="radio" name="count" :value="i" :id="'count'+i" v-model="SelectedPeopleCount">
 					<label class="noLabel" :for="'count'+i">{{ i }}</label>
 				</div>
 				<br>
 				<hr>
 				<label>Andere Anzahl:</label><br>
-				<input onchange="if(this.value=='') this.style.background = 'default'; else this.style.background = 'rgb(69, 126, 201)';" v-model="selectedPeopleCount" class="textInput" id="peopleCountInput" type="number">
+				<input v-model="SelectedPeopleCount" :style="countInputBackground" class="textInput" id="peopleCountInput" type="number">
 			</form>
 			<div class="form">
 				<form class="constraintForm">
 					<span v-for="(constraint, id) in constraints" :key="id" class="constraint">
 						<Constraint
-							v-bind:name="constraint"
-							:constraints="contraints"
+							:name="constraint"
+							:active="Constraints[contraints]"
+							@onConstraintsChanged="changeConstraints"
 						>
 						</Constraint>
 					</span>
@@ -42,9 +43,9 @@
 								@click="addUnavailable($event, id)">
 								<Selectable
 									class="selectable"
-									v-bind:ingredientName="ingredient.name" 
-									v-bind:amount="ingredient.amount"
-									v-bind:available="ingredient.available">
+									:ingredientName="ingredient.name" 
+									:amount="ingredient.amount"
+									:available="ingredient.available">
 								</Selectable>
 							</span>
 						</transition-group>
@@ -61,13 +62,13 @@
 							<span 
 								v-for="(ingredient, id) in unavailableIngredients" 
 								:key="id" 
-								v-bind:id="id"  
+								:id="id"  
 								@click="addAvailable($event, id)">
 								<Selectable
 									class="selectable"
-									v-bind:ingredientName="ingredient.name" 
-									v-bind:amount="ingredient.amount"
-									v-bind:available="ingredient.available">
+									:ingredientName="ingredient.name" 
+									:amount="ingredient.amount"
+									:available="ingredient.available">
 								</Selectable>
 							</span>
 						</transition-group>
@@ -138,6 +139,24 @@ export default {
   		}
 	},
 	computed:{
+		SelectedPeopleCount:{
+			get: function(){
+				return this.selectedPeopleCount;
+			},
+			set: function(val){
+				this.selectedPeopleCount = (val > 100)?100:parseInt(val);
+			}
+		},
+		Constraints:{
+			get: function(){
+				return this.contraints;
+			},
+			set: function(val){
+				if(val["vegan"]) val["veggie"] = false;
+
+				this.contraints = val;
+			}
+		},
 		availableIngredients(){
 			return this.ingredients.filter(x => x.available);
 		},
@@ -145,8 +164,11 @@ export default {
 				return this.ingredients.filter(x => (!(x.available) && 
 					((this.filterString=="")?true:(x.name.toLowerCase().indexOf(this.filterString.toLowerCase())!=-1))));
 		},
-		_contraints(){
-			return this.constraints;
+		countInputBackground(){
+			return {
+				"background-color": (this.selectedPeopleCount === 0)?"#fff":"rgb(69, 126, 201)",
+				"color": (this.selectedPeopleCount === 0)?"#000":"#fff"
+			}
 		}
 	},
 	methods: {
@@ -160,6 +182,13 @@ export default {
 		   * variable and then emit the change of the local variable back to the 
 		   * original prop to pass to the parent.
 		   */
+	  },
+	  changeConstraints(val){
+		  var newConstraints = this.Constraints;
+
+		  newConstraints[val.name] = val.active;
+
+		  this.Constraints = newConstraints;
 	  },
 	  addAvailable(event, id){
 		  for(let ingr of this.ingredients){

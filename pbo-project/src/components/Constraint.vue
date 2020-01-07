@@ -1,11 +1,11 @@
 <template>
     <div class="templateDiv">
         <input type="checkbox" name="constraint" 
-            v-bind:value="name" 
-            v-bind:id="name" 
-            v-model="constraints[name]">
-	    <label v-bind:for="name" class="constraint selectable vegan constraintLabel">
-	        <img class="constraintimg" v-bind:src="imgSrc">
+            :value="name" 
+            :id="name" 
+            v-model="Active">
+	    <label :for="name" class="constraint selectable vegan constraintLabel">
+	        <img class="constraintimg" :src="imgSrc">
 	        <span>{{ name }}</span>
 	    </label>
     </div>
@@ -13,20 +13,27 @@
 
 <script>
 export default {
-    props:  ["name", "constraints"],
-    data:function() {
+    props:  ["name", "active"],
+    data: function(){
         return{
-            // constraints:{
-            //     vegan: false,
-            //     veggie: false,
-            //     glutenfree: false,
-            //     lactosefree: false
-            // }
+            isActive: this.active
         }
     },
     computed:{
         imgSrc(){
-            return require("../../img/" + this.name + ".png");
+            return require("@/../img/" + this.name + ".png");
+        },
+        Active: {
+            get: function(){
+                return this.isActive;
+            },
+            set: function(val){
+                this.isActive = val;
+                this.$emit("onConstraintsChanged", {
+                    name: this.name,
+                    active: this.isActive
+                });
+            }
         }
     }
 }
