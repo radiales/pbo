@@ -1,7 +1,24 @@
-# Programmierung von Benutzeroberflächen
+# pbo-project
 
-Projekt von
+## Project setup
+```
+npm install
+```
 
-- Julius Banke (s77034)
-- Kevin Holz (s77179)
-- Wladislaw Nedzelskij (s77118)
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
