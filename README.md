@@ -1,24 +1,29 @@
-# pbo-project
+# Programmierung von Benutzeroberflächen
+## Mealshare
 
-## Project setup
+Projekt von:
+
+ - Julius Banke (s77034)
+ - Kevin Holz (s77179)
+ - Wladislaw Nedzelskij (s77118)
+
+Mealshare ist ein Mockup einer App für Smartphones.
+Sie ist eine Art Kochbuch, die auf Grundlage des Appetits des Nutzers
+und der vorhandenen Zutaten Rezepte vorschlägt.
+
+Weiterhin gibt es die Möglichkeit, die Rezepte mit Freunden zu teilen,
+sodass man gemeinsam eine Mahlzeit kochen kann und jeder sich für das
+mitbringen bestimmter Zutaten anmeldet.
+
+## Setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Da es sich um eine mobile App handelt, sollte im Browser die Einstellung
+zur Simulation einer Smartphone-gemäßen Bildschirmauflösung vorgenommen werden.
+Als Referenz dient die Auflösung des Google Pixel 2 XL (skaliert 411 x 823)
