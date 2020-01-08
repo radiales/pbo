@@ -11,18 +11,16 @@
       <router-link to="/recipes">Recipes</router-link> |
       <router-link to="/last">Last</router-link>
     </div>
-    <transition name="slide-fade" mode="out-in">
-      <router-view v-if="show.home" v-bind:show="show" class="view" @onShowChanged="updateShow"></router-view>
+    <transition name="slide-fade">
+      <router-view v-if="show.home" :show="show" class="view" @onShowChanged="updateShow"></router-view>
     </transition>
-    <transition name="slide-fade" mode="in-out">
-      <router-view v-if="show.recipes" v-bind:show="show" class="view"  name="recipeView"></router-view>
+    <transition name="slide-fade">
+      <router-view v-if="show.recipes" :show="show" class="view"  name="recipeView"></router-view>
     </transition>
     <transition
       name="lastTransition"
-      enter-active-class="last-start"
-      leave-active-class="last-leave"
       >
-      <router-view v-if="show.last" v-bind:show="show" class="view" name="lastView"></router-view>
+      <router-view v-if="show.last" :show="show" class="view" name="lastView"></router-view>
     </transition>
   </div>
 </template>
@@ -58,32 +56,14 @@ body{
   left: 100vw;
 }
 
-.recipes-start, .last-start{
-  left: 100vw;
-  display: none;
-}
-
-.recipes-leave, .last-leave{
-  left: 0;
-  display: block;
-}
-
-.slide-fade-enter-active {
-  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-leave-active {
-  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-
-.slide-fade-enter
+.slide-fade-enter-active, .slide-fade-leave-active
 {
-  transform: translateX(100px);
-  
+  transition: all .5s ease;
 }
 
-.slide-fade-leave-to{
-  transform: translateX(-100px);
-  
+.slide-fade-enter, .slide-fade-leave-to
+{
+  transform: translateX(-100vw);
 }
 
 #app {
