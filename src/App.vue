@@ -11,16 +11,10 @@
       <router-link to="/recipes">Recipes</router-link> |
       <router-link to="/last">Last</router-link>
     </div>
-    <transition name="slide-fade">
-      <router-view v-if="show.home" :show="show" class="view" @onShowChanged="updateShow"></router-view>
-    </transition>
-    <transition name="slide-fade">
-      <router-view v-if="show.recipes" :show="show" class="view"  name="recipeView"></router-view>
-    </transition>
-    <transition
-      name="lastTransition"
-      >
-      <router-view v-if="show.last" :show="show" class="view" name="lastView"></router-view>
+    <transition name="slide-fade" mode="out-in">
+      <router-view v-if="show.home && !show.recipes && !show.last" :show="show" class="view" @onShowChanged="updateShow"></router-view>
+      <router-view v-else-if="!show.home && show.recipes && !show.last" :show="show" class="view"  name="recipeView"></router-view>
+      <router-view v-else-if="!show.home && !show.recipes && show.last" :show="show" class="view" name="lastView"></router-view>
     </transition>
   </div>
 </template>
@@ -56,14 +50,36 @@ body{
   left: 100vw;
 }
 
-.slide-fade-enter-active, .slide-fade-leave-active
-{
-  transition: all .5s ease;
+@keyframes slidein {
+  from
+  {
+    transform: translateX(100vw);
+  }
+  to
+  {
+    transform: translateX(0vw);
+  }
 }
 
-.slide-fade-enter, .slide-fade-leave-to
+@keyframes slideout {
+  from
+  {
+    transform: translateX(0vw);
+  }
+  to
+  {
+    transform: translateX(-100vw);
+  }
+}
+
+.slide-fade-enter-active
 {
-  transform: translateX(-100vw);
+  animation: slidein .15s;
+}
+
+.slide-fade-leave-active
+{
+  animation: slideout .15s;
 }
 
 #app {
