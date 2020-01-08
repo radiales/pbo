@@ -26,4 +26,4 @@ npm run serve
 
 Da es sich um eine mobile App handelt, sollte im Browser die Einstellung
 zur Simulation einer Smartphone-gemäßen Bildschirmauflösung vorgenommen werden.
-Als Referenz dient die Auflösung des Google Pixel 2 XL (skaliert 411 x 823)
+Als Referenz dient die Auflösung des Google Pixel 2 (skaliert 411 x 731)
