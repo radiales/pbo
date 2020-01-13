@@ -1,9 +1,11 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+import App from '@/App.vue'
+import router from '@/router'
+import backend from "@/services/backend.js"
 
-import Selectable from "./components/Selectable"
-import Constraint from "./components/Constraint"
+import Selectable from "@/components/Selectable"
+import Constraint from "@/components/Constraint"
+import Back from "@/components/Back.vue"
 
 Vue.config.productionTip = false
 
@@ -16,21 +18,19 @@ Vue.component("Last");
 */
 Vue.component("Selectable", Selectable);
 Vue.component("Constraint", Constraint);
+Vue.component("Back", Back);
 
-var vueIn = new Vue({
+Vue.use({
+  install(Vue) {
+    Vue.prototype.$be = backend;
+  }
+});
+
+new Vue({
   router,
-  data:{
-    show: {
-      home:     true,
-      recipes:  false,
-      last:     false,
-      share:    false
-    }
-  },
-  methods: {
-    updateShowVariable: function(){
-      this.$refs.Home.show = true
-    }
+  data: {
+    ingredients: [],
+    chosenRecipe: null
   },
   render: h => h(App)
 }).$mount('#app')

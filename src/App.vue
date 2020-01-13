@@ -12,9 +12,29 @@
       <router-link to="/last">Last</router-link>
     </div>
     <transition name="slide-fade" mode="out-in">
-      <router-view v-if="show.home && !show.recipes && !show.last" :show="show" class="view" @onShowChanged="updateShow"></router-view>
-      <router-view v-else-if="!show.home && show.recipes && !show.last" :show="show" class="view"  name="recipeView"></router-view>
-      <router-view v-else-if="!show.home && !show.recipes && show.last" :show="show" class="view" name="lastView"></router-view>
+      <router-view 
+        v-if="show.home && !show.recipes && !show.last" 
+        :show="show" 
+        class="view" 
+        @onShowChanged="updateShow"
+        @goBack="goBack"
+      ></router-view>
+      <router-view 
+        v-else-if="!show.home && show.recipes && !show.last" 
+        :show="show" 
+        class="view"  
+        name="recipeView" 
+        @onShowChanged="updateShow"
+        @goBack="goBack"
+      ></router-view>
+      <router-view 
+        v-else-if="!show.home && !show.recipes && show.last" 
+        :show="show" 
+        class="view" 
+        name="lastView" 
+        @onShowChanged="updateShow"
+        @goBack="goBack"
+      ></router-view>
     </transition>
   </div>
 </template>
@@ -139,14 +159,15 @@ body{
 </style>
 
 <script>
-function animate(){
-  document.querySelector("#recipesSection").classList += "animationTest";
-}
-
 export default{
   methods:{
     updateShow(val){
       this.show = val;
+    }, 
+    goBack(page) {
+      Object.keys(this.show).forEach(
+        x => this.show[x] = (x == page) ? true : false
+      )
     }
   },
   data:function(){

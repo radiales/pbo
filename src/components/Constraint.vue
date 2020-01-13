@@ -4,34 +4,42 @@
             :value="name" 
             :id="name" 
             v-model="Active">
-	    <label :for="name" class="constraint selectable vegan constraintLabel">
-	        <img class="constraintimg" :src="imgSrc">
-	        <span>{{ name }}</span>
-	    </label>
+            <label :for="name" class="constraint selectable vegan constraintLabel" :style="background">
+                <img class="constraintimg" :src="imgSrc">
+                <span>{{ name }}</span>
+            </label>
     </div>
 </template>
 
 <script>
 export default {
-    props:  ["name", "active"],
-    data: function(){
-        return{
-            isActive: this.active
+    props:  {
+        name: {
+            type: String
+        },
+        active: {
+            default: false,
+            type: Boolean
         }
     },
     computed:{
-        imgSrc(){
+        imgSrc() {
             return require("@/../img/" + this.name + ".png");
+        },
+        background() {
+            return {
+                "background-color": this.Active ? "rgb(69, 126, 201)" : "rgba(0, 0, 0, 0)",
+                "color": this.Active ? "white" : "inherit"
+            };
         },
         Active: {
             get: function(){
-                return this.isActive;
+                return this.active;
             },
             set: function(val){
-                this.isActive = val;
                 this.$emit("onConstraintsChanged", {
                     name: this.name,
-                    active: this.isActive
+                    active: val
                 });
             }
         }
@@ -71,8 +79,8 @@ input[type="checkbox"]{
     display: none;
 }
 
-input[type="checkbox"]:checked + .selectable{
+/* input[type="checkbox"]:checked + .selectable{
     background: rgb(69, 126, 201);
 	color: white;
-}
+} */
 </style>

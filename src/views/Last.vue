@@ -1,94 +1,132 @@
 <template>
-
-    <div class="Last">
-
-            <div class="Header">
-                <h1>Tomatensuppe 🍜</h1>
-            </div>
-
-            <div class="Recipe">
-
-                <ul id="Ingredients">
-                    <li>
-                        <h2>2 Tomaten 🍅</h2>
-                        <h2>100ml Sahne 🥛</h2>
-                        <h2>1tl Salz 🧂</h2>
-                        <h2>1000ml Water 💧</h2>
-                        <h2>Pfeffer 🌶️</h2>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="Preperations">
-
-                <h4>Die Tomaten an der Unterseite kreuzweise anritzen und in eine große Schüssel legen. Mit kochendem oder heißem Wasser übergießen. Nach 10 Minuten vorsichtig die Haut und den grünen Knopf auf der Oberseite von der Tomate entfernen und die geschälten Tomaten klein schneiden.
-
-                    Nun die Zwiebeln klein würfeln und den Knoblauch pressen. Beides in Olivenöl anbraten und nach ca. 3 Minuten die Tomatenstücke hinzugeben. Nach ein paar Minuten die Gemüsebrühe und die Gewürze (ohne die Petersilie) hinzugeben und auf niedriger Temperatur 20 Minuten kochen. Das Tomatenmark unterrühren und die Suppe mit einem Pürierstab fein pürieren.
-                    Nach Belieben mit den Gewürzen abschmecken und mit ein wenig frischer Petersilie servieren.
-                </h4>
-            </div>
-
-
+  <div class="Last">
+    <div class="Header">
+      <h1 v-if="recipe != null">{{ recipe.name }}</h1>
+      <Back :page="'recipes'" @goBack="x => $emit('goBack', x)"></Back>
     </div>
+    <div class="nothingFound" v-if="recipe == null" @click="$emit('goBack', 'recipes')">
+      <span>😢</span>
+      <h4>Sorry, da ist was schief gelaufen...</h4>
+   </div>
+    <div class="Recipe" v-if="recipe != null">
+      <h3>Zutaten</h3>
+      <ul id="Ingredients">
+        <li v-for="(i, id) in recipe.ingredients" :key="id" :style="isMissing(i)" class="ingridient">{{ i.amount + " " + i.name }}</li>
+      </ul>
+    </div>
+    <div class="Preparations" v-if="recipe != null">
+      <h3>Anleitung</h3>
+      <ol>
+        <li v-for="(step, id) in recipe.description.split('\n')" :key="id" class="step">{{ step }}</li>
+      </ol>
+    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: 'Last',
-        props: {
-            msg: String
-        }
+	export default {
+		name: 'Last',
+		props: {
+			msg: String
+    },
+    data: function()
+    {
+      return {
+        recipe: null
+      }
+    },
+    methods: {
+      isMissing(i) {
+        return {
+          "color": this.recipe.missing.map(x => x.name).includes(i.name) ? "rgb(167, 0, 0)" : "inherit"
+        };
+      }
+    },
+    mounted() {
+      this.recipe = this.$root.$data.chosenRecipe;
     }
+	}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-
 <style scoped>
-    h3 {
-        margin: 40px 0 0;
-    }
-    ul {
-        list-style-type: none;
-        padding: 0s;
-    }
-    li {
-        display: inline-block;
-        text-align: left;
-        margin: 0 10px;
-    }
-    a {
-        color: #42b983;
-    }
+#backContainer {
+  position: fixed;
+  bottom: 0;
+}
 
-    .Header{
-        margin: 0 auto;
-        background: rgba(210, 210, 210, 0.4);
-        border-radius: 15px;
-        padding: 20px;
-        margin-top: 15px;
-        width: 70%;
-        backdrop-filter: blur(5px);
-        border-color: transparent!important;
-    }
-    .Recipe{
-        margin: 0 auto;
-        text-align: left;
-        background: rgba(210, 210, 210, 0.4);
-        border-radius: 15px;
-        padding: 20px;
-        margin-top: 15px;
-        width: 70%;
-        backdrop-filter: blur(5px);
-        border-color: transparent!important;
-    }
-    .Preperations{
-        margin: 0 auto;
-        background: rgba(210, 210, 210, 0.4);
-        border-radius: 15px;
-        padding: 20px;
-        margin-top: 15px;
-        width: 70%;
-        backdrop-filter: blur(5px);
-        border-color: transparent!important;
-    }
+ol {
+  padding: 0;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0s;
+}
+
+li {
+	text-align: left;
+	margin: 0 10px;
+  word-wrap: break-word;
+}
+
+a {
+	color: #42b983;
+}
+
+.nothingFound {
+    border-radius: 10px;
+    margin: 0 auto;
+    background: rgba(200, 200, 200, 0.4);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    margin-top: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.nothingFound > span {
+    font-size: 19pt;
+}
+
+.Header{
+	margin: 0 auto;
+	background: rgba(210, 210, 210, 0.4);
+  padding-top: 10px;
+  padding-bottom: 10px;
+	width: 100%;
+	backdrop-filter: blur(5px);
+	border-color: transparent!important;
+}
+
+.Recipe{
+	margin: 0 auto;
+	background: rgba(210, 210, 210, 0.4);
+	border-radius: 15px;
+	margin-top: 15px;
+	width: 90%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+	backdrop-filter: blur(5px);
+	border-color: transparent!important;
+}
+
+.ingridient {
+  font-weight: 600;
+  padding-inline-start: 10px;
+}
+
+.step {
+  margin-bottom: 15px;
+}
+
+.Preparations{
+	margin: 0 auto;
+	background: rgba(210, 210, 210, 0.4);
+	border-radius: 15px;
+	padding: 20px;
+	margin-top: 15px;
+	width: calc(90% - 40px);
+	backdrop-filter: blur(10px);
+	border-color: transparent!important;
+}
 </style>
