@@ -6,3 +6,4 @@
  - (optional) Zutaten von Server laden
  - background-images skalieren/transition fixen
  - README.md für Server updaten
+ - Octicons deinstallieren
