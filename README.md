@@ -24,6 +24,8 @@ npm install
 npm run serve
 ```
 
+Server starten: [Server](https://github.com/silver1bear/MealshareServer)
+
 Da es sich um eine mobile App handelt, sollte im Browser die Einstellung
 zur Simulation einer Smartphone-gemäßen Bildschirmauflösung vorgenommen werden.
 Als Referenz dient die Auflösung des Google Pixel 2 (skaliert 411 x 731)
