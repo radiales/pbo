@@ -50,7 +50,7 @@
     </div>
     <div>
       <div class="form searchForm">
-        <input @click="update" type="submit" value="Update" form="nameForm"/>
+        <input @click="update" :style="UnsavedChanges" type="submit" value="Update" form="nameForm"/>
       </div>
     </div>
   </div>
@@ -62,6 +62,7 @@ export default {
   data: function() {
     return {
       debugInvite: "",
+      unsavedChanges: false,
       participantName: "",
       name: "",
       ingredientsToBring: [],
@@ -106,6 +107,13 @@ export default {
       ]
     }
   },
+  computed: {
+    UnsavedChanges: function() {
+      return {
+        "background": this.unsavedChanges ? "" : "#b4b7bb"
+      }
+    }
+  },
   mounted(){
     this.fetchInvite();
   },
@@ -125,6 +133,7 @@ export default {
     },
     update(){
       this.AsyncPutInvite().then(x => alert(x.error ? "Fehler" : "Fertig!"));
+      this.unsavedChanges = false;
     },
     async AsyncPutInvite(){
       let dataToBeAdded = {
@@ -149,6 +158,7 @@ export default {
         this.ingredientsToBring.push(this.ingredientsNeeded[idx]);
       
       this.ingredientsNeeded.splice(idx, 1);
+      this.unsavedChanges = true;
     },
     removeFromOwn(idx){
       let found = false;
@@ -164,6 +174,7 @@ export default {
         this.ingredientsNeeded.push(this.ingredientsToBring[idx]);
       
       this.ingredientsToBring.splice(idx, 1);
+      this.unsavedChanges = true;
     }
   }
 }
