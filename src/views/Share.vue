@@ -134,6 +134,8 @@ export default {
     update(){
       this.AsyncPutInvite().then(x => alert(x.error ? "Fehler" : "Fertig!"));
       this.unsavedChanges = false;
+
+      setTimeout(()=>{this.fetchInvite()}, 300); //TODO: evaluate
     },
     async AsyncPutInvite(){
       let dataToBeAdded = {
