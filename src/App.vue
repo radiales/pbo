@@ -50,7 +50,7 @@ body{
   height: 200vh;
   background-image: url("../img/bg_new.png");
   background-attachment: fixed;
-  background-size: 50%;
+  /* background-size: 50%; */
 }
 
 #homeSection{
@@ -94,12 +94,12 @@ body{
 
 .slide-fade-enter-active
 {
-  animation: slidein .15s;
+  animation: slidein .15s ease-in;
 }
 
 .slide-fade-leave-active
 {
-  animation: slideout .15s;
+  animation: slideout .15s ease-out;
 }
 
 #app {
@@ -121,7 +121,7 @@ body{
   text-align: left;
   height: 15vh;
   background-image: url("../img/food_illustration.jpg");
-  background-size: 100%;
+  /* background-size: 100%; */
   background-attachment: fixed;
 }
 

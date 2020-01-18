@@ -3,6 +3,7 @@ import Router     from 'vue-router'
 import Home       from './views/Home.vue'
 import Recipes    from "./views/Recipes.vue"
 import Last       from "./views/Last"
+import Share      from "./views/Share"
 
 Vue.use(Router)
 
@@ -17,6 +18,10 @@ export default new Router({
         lastView:   Last,
       }//,
       //props: {default: true, recipeView: false, lastView: false}
+    },
+    {
+      path: "/share",
+      component: Share
     },
     {
       path: "/recipes",

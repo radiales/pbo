@@ -9,9 +9,9 @@ import Back from "@/components/Back.vue"
 
 Vue.config.productionTip = false
 
-Vue.component("Home");
-Vue.component("Recipes");
-Vue.component("Last");
+// Vue.component("Home");
+// Vue.component("Recipes");
+// Vue.component("Last");
 /*
  * FIX for non-registered components bug I
  * had before. 

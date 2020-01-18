@@ -34,22 +34,20 @@
                 <br>
                 <div class="ingredients chosenParent">
                     <span class="availabilityLabel">Ausgewählt:</span>
-                    <div class="chosen ingredientsGroup">
-                        <transition-group name="fade" tag="span">
-                            <span 
-                                v-for="(ingredient, id) in availableIngredients" 
-                                :key="id" 
-                                :id="id"
-                                @click="addUnavailable($event, id)">
-                                <Selectable
-                                    class="selectable"
-                                    :ingredientName="ingredient.name" 
-                                    :amount="ingredient.amount"
-                                    :available="ingredient.available">
-                                </Selectable>
-                            </span>
-                        </transition-group>
-                    </div>				
+                    <transition-group name="fade" tag="div" class="chosen ingredientsGroup">
+                        <span 
+                            v-for="(ingredient, id) in availableIngredients" 
+                            :key="id" 
+                            :id="id"
+                            @click="addUnavailable($event, id)">
+                            <Selectable
+                                class="selectable"
+                                :ingredientName="ingredient.name" 
+                                :amount="ingredient.amount"
+                                :available="ingredient.available">
+                            </Selectable>
+                        </span>
+                    </transition-group>
                 </div>
                 <div class="ingredients availableParent">
                     <span class="availabilityLabel">Verfügbar</span>
@@ -57,8 +55,7 @@
                         <input class="textInput" v-model="filterString" type="text" placeholder="Suchen...">
                     </form>
                     <div class="available ingredientsGroup">
-                        <div class="chosen ingredientsGroup">
-                        <transition-group name="fade" tag="span">
+                        <transition-group name="fade" tag="div" class="chosen ingredientsGroup">
                             <span 
                                 v-for="(ingredient, id) in unavailableIngredients" 
                                 :key="id" 
@@ -72,7 +69,6 @@
                                 </Selectable>
                             </span>
                         </transition-group>
-                    </div>	
                     </div>
                 </div>
             </div>
@@ -263,12 +259,22 @@ export default {
 </script>
 
 <style scoped>
-
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
+.fade-enter-active {
+    transition: all .5s ease-in;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.fade-leave-active{
+    transition: all .5s ease-out;
+}
+
+.fade-enter {
     opacity: 0;
+    transform: scaleY(0);
+}
+
+.fade-leave-to {
+    opacity: 0;
+    transform: scaleY(0)
 }
 
 .tasteForm label{
@@ -359,7 +365,6 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     background-size: 70%;
-    backdrop-filter: blur(10px);
     background-position: center;
     padding: 10px;
     border-radius: 15px;
