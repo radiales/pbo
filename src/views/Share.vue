@@ -1,9 +1,11 @@
 <template>
     <div class="Last">
         <div class="backgroundBlur">
-           <label>Name </label>
-           <input required minlength="5" type="text" />
-           <h4>Ich bringe mit:</h4>
+            <form id="nameForm">
+                <label>Name </label>
+                <input required type="text" />
+            </form>
+            <h4>Ich bringe mit:</h4>
                <transition-group mode="out-in" name="fade" tag="ul" class="partUl">
                 <li class="ingridientsNeeded ingLi ingGreen"
                     v-for="(ing, id) in ingredientsToBring"
@@ -44,9 +46,9 @@
             </div>
         </div>
         <div>
-            <form class="form searchForm">
-                <input @click="update" type="button" value="Update"/>
-            </form>
+            <div class="form searchForm">
+                <input @click="update" type="submit" value="Update" form="nameForm"/>
+            </div>
         </div>
     </div>
 </template>
