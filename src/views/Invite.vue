@@ -44,7 +44,7 @@ export default {
     },
     onCopy: function (e) {
       this.showHint = true;
-      setTimeout(()=>this.showHint=false, 600);
+      setTimeout(()=>this.showHint=false, 800);
     },
     onError: function () {
         alert('Failed')
