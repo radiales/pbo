@@ -2,9 +2,9 @@
     <div class="Last">
         <div class="backgroundBlur">
            <label>Name </label>
-           <input type="text" />
+           <input required minlength="5" type="text" />
            <h4>Ich bringe mit:</h4>
-           <ul class="partUl">
+               <transition-group mode="out-in" name="fade" tag="ul" class="partUl">
                 <li class="ingridientsNeeded ingLi ingGreen"
                     v-for="(ing, id) in ingredientsToBring"
                     :key="id"
@@ -12,11 +12,11 @@
                     <span class="ingName ingGreen"> {{ ing.name }}</span>
                     <span class="ingAmount">{{ ing.amount + ing.unit }}</span>
                 </li>
-            </ul>
+               </transition-group>
         </div>
         <div class="backgroundBlur">
             <h3>Gebraucht werden noch:</h3>
-            <ul class="partUl">
+                <transition-group name="fade" tag="ul" class="partUl">
                 <li class="ingridientsNeeded ingLi ingRed"
                     v-for="(ing, id) in ingredientsNeeded"
                     :key="id"
@@ -24,7 +24,7 @@
                     <span class="ingName ingRed"> {{ ing.name }}</span>
                     <span class="ingAmount">{{ ing.amount + ing.unit }}</span>
                 </li>
-            </ul>
+                </transition-group>
         </div>
         <div class="backgroundBlur" id="participantsWrapper">
             <h3>Wer bringt was mit:</h3>
@@ -42,6 +42,11 @@
                     </li>
                 </ul>
             </div>
+        </div>
+        <div>
+            <form class="form searchForm">
+                <input @click="update" type="button" value="Update"/>
+            </form>
         </div>
     </div>
 </template>
@@ -100,19 +105,62 @@ export default {
         }
     },
     methods: {
+        update(){
+            //TODO
+        },
         addToOwn(idx) {
-            this.ingredientsToBring.push(this.ingredientsNeeded[idx]);
-            this.ingredientsNeeded = this.ingredientsNeeded.slice(idx-1, idx);
+            let found = false;
+            for(let ing of this.ingredientsToBring){
+                if(ing.name == this.ingredientsNeeded[idx].name){
+                    ing.amount += this.ingredientsNeeded[idx].amount;
+                    found = true;
+                    break;
+                }
+            }
+
+            if(!found)
+                this.ingredientsToBring.push(this.ingredientsNeeded[idx]);
+            
+            this.ingredientsNeeded.splice(idx, 1);
         },
         removeFromOwn(idx){
-            this.ingredientsNeeded.push(this.ingredientsToBring[idx]);
-            this.ingredientsToBring = this.ingredientsToBring.slice(idx-1, idx);
+            let found = false;
+            for(let ing of this.ingredientsNeeded){
+                if(ing.name == this.ingredientsToBring[idx].name){
+                    ing.amount += this.ingredientsToBring[idx].amount;
+                    found = true;
+                    break;
+                }
+            }
+
+            if(!found)
+                this.ingredientsNeeded.push(this.ingredientsToBring[idx]);
+            
+            this.ingredientsToBring.splice(idx, 1);
         }
     }
 }
 </script>
 
 <style scoped>
+.fade-enter-active {
+    transition: all .5s ease-in;
+}
+
+.fade-leave-active{
+    transition: all .5s ease-out;
+}
+
+.fade-enter {
+    opacity: 0;
+    transform: scaleY(0);
+}
+
+.fade-leave-to {
+    opacity: 0;
+    transform: scaleY(0)
+}
+
 .Last {
     display: flex;
     flex-direction: column;
@@ -184,5 +232,35 @@ export default {
 
 .ingGreen {
     background: rgba(50, 150, 50, 0.2);
+}
+
+.form{
+    background: rgba(210, 210, 210, 0.4);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: 15px;
+    width: 70%;
+    backdrop-filter: blur(5px);
+    left: 0;
+}
+
+.searchForm{
+    padding: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.searchForm input{
+    width: 90%;
+    height: 10vw;
+    border: 0;
+    background: rgb(69, 126, 201);
+    border-radius: 5px;
+    color: white;
 }
 </style>
