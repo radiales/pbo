@@ -1,9 +1,12 @@
 <template>
     <div class="Last">
+        <div class="backgroundBlur fWeight600">
+            <h2>Rezept: {{ name }}</h2>
+        </div>
         <div class="backgroundBlur">
             <form id="nameForm">
                 <label>Name </label>
-                <input required type="text" />
+                <input required type="text" v-model="participantName" />
             </form>
             <h4>Ich bringe mit:</h4>
                <transition-group mode="out-in" name="fade" tag="ul" class="partUl">
@@ -12,7 +15,7 @@
                     :key="id"
                     @click="removeFromOwn(id)">
                     <span class="ingName ingGreen"> {{ ing.name }}</span>
-                    <span class="ingAmount">{{ ing.amount + ing.unit }}</span>
+                    <span class="ingAmount">{{ ing.amount.toString() + " " + ing.unit }}</span>
                 </li>
                </transition-group>
         </div>
@@ -24,7 +27,7 @@
                     :key="id"
                     @click="addToOwn(id)">
                     <span class="ingName ingRed"> {{ ing.name }}</span>
-                    <span class="ingAmount">{{ ing.amount + ing.unit }}</span>
+                    <span class="ingAmount">{{ ing.amount.toString() + " " + ing.unit }}</span>
                 </li>
                 </transition-group>
         </div>
@@ -40,7 +43,7 @@
                         :key="id" 
                         class="ingLi">
                         <span class="ingName">{{ ing.name }}</span>
-                        <span class="ingAmount">{{ ing.amount + ing.unit }}</span>
+                        <span class="ingAmount">{{ ing.amount.toString() + " " + ing.unit }}</span>
                     </li>
                 </ul>
             </div>
@@ -58,13 +61,10 @@ export default {
     name: "Share",
     data: function() {
         return {
-            ingredientsToBring: [
-                {
-                    name: "Tomatenmark",
-                    amount: 1,
-                    unit: ""
-                },
-            ],
+            debugInvite: "",
+            participantName: "",
+            name: "",
+            ingredientsToBring: [],
             ingredientsNeeded: [
                 {
                     name: "Tomatenmark",
@@ -106,9 +106,34 @@ export default {
             ]
         }
     },
+    mounted(){
+        this.fetchInvite();
+    },
     methods: {
+        fetchInvite(){
+            this.AsyncfetchInvite().then((x) => {
+                this.debugInvite = x;
+                this.name = x.name;
+                this.ingredientsNeeded = x.ingredientsNeeded;
+                this.participants = x.participants;
+            });
+        },
+        async AsyncfetchInvite(){
+            if(!this.$route.query.id) return;
+            const response = await this.$be.fetchInvite(this.$route.query.id);
+            return response.data;
+        },
         update(){
-            //TODO
+            this.AsyncPutInvite().then(x => alert(x.error ? "Fehler" : "Fertig!"));
+        },
+        async AsyncPutInvite(){
+            let dataToBeAdded = {
+                name: this.participantName,
+                ingredients: this.ingredientsToBring
+            };
+
+            const response = await this.$be.putInvite(this.$route.query.id, JSON.parse(JSON.stringify(dataToBeAdded)));
+            return response.data;
         },
         addToOwn(idx) {
             let found = false;
