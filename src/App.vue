@@ -50,7 +50,7 @@ body{
   height: 200vh;
   background-image: url("../img/bg_new.png");
   background-attachment: fixed;
-  background-size: 50%;
+  /* background-size: 50%; */
 }
 
 #homeSection{
@@ -121,7 +121,7 @@ body{
   text-align: left;
   height: 15vh;
   background-image: url("../img/food_illustration.jpg");
-  background-size: 100%;
+  /* background-size: 100%; */
   background-attachment: fixed;
 }
 
