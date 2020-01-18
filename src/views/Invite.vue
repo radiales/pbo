@@ -1,59 +1,134 @@
 <template>
-  <div>
-    <div class="linkDiv" id="myInput">
-      {{link}}
+  <div id="container">
+    <div class="wrapper">
+      <div>
+        <h3>Toll!</h3>
+        <p id="message">
+          Du hast ein Rezept gefunden!
+          <br />
+          <br />
+          Um Freunde einzuladen oder zu sehen,
+          wer welche Zutat mitbringt, sende Ihnen diesen Link:
+        </p>
+      </div>
+      <input type="text" :value="link" id="link" ref="link" @click="selectText">
+      <div id="copyButtonWrapper" v-clipboard:copy="link" v-clipboard:success="onCopy" v-clipboard:error="onError">
+        <input type="button" value="Kopieren">
+      </div>
     </div>
-    <div class="copyLinkDiv"  v-clipboard:copy="link" v-clipboard:success="onCopy" v-clipboard:error="onError">
-      <input type="button" value="Copy Link">
-    </div>
+    <transition name="appear" enter-active-class="fadeIn" leave-active-class="fadeOut">
+      <div id="hint" v-if="showHint">
+        Kopiert!
+      </div>
+    </transition>>
   </div>
-
 </template>
 
 <script>
-    export default {
-        name: "Invite",
-        data: function () {
-            return {
-                link: 'Link to copy'
-            }
-        },
-        methods: {
-            onCopy: function (e) {
-                alert('copied: ' + e.text)
-            },
-            onError: function () {
-                alert('Failed')
-            }
-        }
+export default {
+  name: "Invite",
+  data: function () {
+    return {
+      id: "abc123",
+      showHint: false
     }
+  },
+  computed: {
+    link(){
+      return window.location.origin + "/share?id=" + this.id;
+    }
+  },
+  methods: {
+    selectText(){
+      this.$refs.link.select();
+    },
+    onCopy: function (e) {
+      this.showHint = true;
+      setTimeout(()=>this.showHint=false, 600);
+    },
+    onError: function () {
+        alert('Failed')
+    }
+  }
+}
 </script>
 
 <style scoped>
-  .linkDiv{
-    margin: 80px auto;
-    margin-bottom: 8px;
-    padding: 10px;
-    border-style: dashed;
-    backdrop-filter: blur(5px);
-    background: rgba(200,200,200,0.8);
-    backdrop-filter: blur(10px);
-    width: 60%;
-  }
+#container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .copyLinkDiv{
-    border-radius: 0;
-    margin: 0 auto;
-    width: 60%;
-  }
+.wrapper {
+  width: 65%;
+  background: rgba(210,210,210,0.8);
+  backdrop-filter: blur(5px);
+  margin-top: 15px;
+  padding: 25px;
+  border-radius: 15px;
+}
 
-  .copyLinkDiv input{
-    width: 90%;
-    height: 10vw;
-    border: 0;
-    background: rgb(69, 126, 201);
-    border-radius: 5px;
-    color: white;
-  }
+#message {
+  text-align: left;
+}
 
+#link {
+  padding: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: white;
+  border: 3px dotted black;
+  width: 94%;
+  text-align: center;
+}
+
+#copyButtonWrapper {
+  margin-top: 25px;
+  background: rgba(200,200,200,0.6);
+  border-radius: 15px;
+  padding: 15px;
+}
+
+#copyButtonWrapper > input {
+  background: rgb(69, 126, 201);
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  width: 80%;
+  font-weight: 600;
+  border: 0;
+}
+
+#hint {
+  position: fixed;
+  background: rgba(225,225,225,1);
+  padding: 15px;
+  font-size: 16pt;
+  border-radius: 15px;
+  width: 40vw;
+  font-weight: 600;
+  top: 40vh;
+  border: #aaa 2px solid;
+}
+
+@keyframes appear {
+  0%, 100%{
+    opacity: 0;
+    display: none;
+  }
+  20%, 70%{
+    opacity: 1;
+    display: block;
+  }
+}
+
+.fadeIn{
+  animation: appear 1s ease-in-out forwards;
+}
+
+.fadeOut{
+  
+}
 </style>

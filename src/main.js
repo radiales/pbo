@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from '@/App.vue'
 import router from '@/router'
 import backend from "@/services/backend.js"
+import VueClipboard from "vue-clipboard2"
 
 import Selectable from "@/components/Selectable"
 import Constraint from "@/components/Constraint"
@@ -19,6 +20,10 @@ Vue.config.productionTip = false
 Vue.component("Selectable", Selectable);
 Vue.component("Constraint", Constraint);
 Vue.component("Back", Back);
+
+
+
+Vue.use(VueClipboard);
 
 Vue.use({
   install(Vue) {
