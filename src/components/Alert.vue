@@ -84,7 +84,7 @@ export default {
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  animation: appear ease-in-out 1s forwards;
+  animation: appear ease-in-out 2.5s forwards;
 }
 
 #window {

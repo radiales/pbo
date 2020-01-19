@@ -1,7 +1,7 @@
 <template>
   <div class="recipiesPageDiv">
     <div class="titleDiv">
-      <h1 @click="getRecipes">Recipes</h1>
+      <h1 @click="getRecipes">Rezepte</h1>
       <Back :page="'home'"></Back>
     </div>
     <div class="mainDiv">

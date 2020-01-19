@@ -1,7 +1,7 @@
 <template>
   <div id="container">
     <Alert v-if="notifyCopy" :message="'Kopiert!'" :type="'success'"></Alert>
-    <Alert v-if="notifyCreate" :message="'Invite erstellt!'" :type="'success'"></Alert>
+    <Alert v-if="notifyCreate" :message="participantName + ', dein Invite wurde erstellt!'" :type="'success'"></Alert>
     <Alert v-if="notifyError" :message="'Sorry, da ist was schief gelaufen...'" :type="'error'"></Alert>
     <div class="wrapper">
       <div>
@@ -17,7 +17,7 @@
       <div v-if="!showLink">
         <label>Dein Name: </label>
         <input type="text" v-model="participantName" class="alignCenter"/>
-        <input type="button" value="Link genieren" class="button margin15" @click="createInvite" />
+        <input type="button" value="Link generieren" class="button margin15" @click="createInvite" />
       </div>
       <div v-if="showLink">
         <input type="text" :value="link" id="link" ref="link" @click="selectText">
@@ -72,7 +72,7 @@ export default {
     selectText(){
       this.$refs.link.select();
     },
-    onCopy: function (e) {
+    onCopy: function () {
       this.notifyCopy = true;
     },
     onError: function () {

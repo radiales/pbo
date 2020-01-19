@@ -1,7 +1,7 @@
 <template>
     <div id="container">
       <router-link :to="{ name: page, params: propsToPass }">
-        <h3>Back</h3>
+        <h3>Zurück</h3>
       </router-link>
     </div>
 </template>
