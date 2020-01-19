@@ -35,6 +35,14 @@
         @onShowChanged="updateShow"
         @goBack="goBack"
       ></router-view>
+      <router-view 
+        v-else-if="!show.home && !show.recipes && !show.last" 
+        :show="show" 
+        class="view" 
+        name="lastView" 
+        @onShowChanged="updateShow"
+        @goBack="goBack"
+      ></router-view>
     </transition>
   </div>
 </template>
@@ -176,6 +184,7 @@ export default{
         home:     true,
         recipes:  false,
         last:     false,
+        invite:   false,
         share:    false
       }
     }

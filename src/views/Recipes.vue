@@ -10,13 +10,17 @@
                <span>😢</span>
                <h4>Sorry, wir konnten keine Mahlzeiten finden die deinen Kriterien entsprechen!</h4>
            </div>
-           <div v-for="(meal, id) in meals.available" :key="id" class="activeRecipeDiv" @click="nextPage('last', meal)">  
-              <h3> {{ meal.name }} </h3>
+           <div v-for="(meal, id) in meals.available" :key="id" class="activeRecipeDiv">  
+              <router-link @click.native="$root.$data.meal = meal" :to="{ name: 'last' }" tag="span">
+                <h3> {{ meal.name }} </h3>
+              </router-link>
             </div>
             <hr v-if="meals.available.length > 0 && meals.unavailable.length > 0" />
-            <div v-for="(meal, id) in meals.unavailable" :key="id" class="inactiveRecipeDiv" @click="nextPage('last', meal)">  
-              <h3> {{ meal.name }} </h3>
-              <span class="missingIngredients">{{ meal.missing.map(x => x.name).slice(0, 3).join(", ") + ((meal.missing.length > 3) ? ", ..." : "") }}</span>
+            <div v-for="(meal, id) in meals.unavailable" :key="id" class="inactiveRecipeDiv">
+              <router-link @click.native="$root.$data.meal = meal" :to="{ name: 'last' }" tag="span">
+                <h3> {{ meal.name }} </h3>
+                <span class="missingIngredients">{{ meal.missing.map(x => x.name).slice(0, 3).join(", ") + ((meal.missing.length > 3) ? ", ..." : "") }}</span>
+              </router-link>
             </div>
         </div>
       </div>
@@ -27,14 +31,20 @@
 <script>
 export default {
   name: 'Recipes',
-  props: ['show'],
+  props: {
+    show: {
+      type: Object
+    }
+  },
   mounted() {
-      this.getRecipes();
+    this.ingredients = this.$root.$data.ingredients;
+    this.getRecipes();
   },
   data: function(){
     return{
       doShow: this.show,
       debugRes: "",
+      ingredients: null,
       meals:{
         available:[],
         unavailable:[]
@@ -43,22 +53,20 @@ export default {
   },
   methods:{
     nextPage(val, meal){
-
-        this.$root.$data.chosenRecipe = meal;
-
-        this.doShow[val] = !this.doShow[val];
-		this.doShow['recipes'] = false;
-		this.$emit("onShowChanged", this.doShow);
+      this.$root.$data.chosenRecipe = meal;
+      this.doShow[val] = !this.doShow[val];
+		  this.doShow['recipes'] = false;
+		  this.$emit("onShowChanged", this.doShow);
     },
     getIngredients() {
-        alert(this.$root.$data.ingredients);
+      // alert(this.$root.$data.ingredients);
     },
     async getRecipes() {
-        const response = await this.$be.fetchRecipes(this.$root.$data.ingredients);
-        this.debugRes = response.data;
-
-        this.meals.unavailable = response.data["almostSuitable"];
-        this.meals.available = response.data["suitable"];
+      // const response = await this.$be.fetchRecipes(this.$root.$data.ingredients);
+      const response = await this.$be.fetchRecipes(this.ingredients);
+      this.debugRes = response.data;
+      this.meals.unavailable = response.data["almostSuitable"];
+      this.meals.available = response.data["suitable"];
     }
   }
 }

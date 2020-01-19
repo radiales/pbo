@@ -3,17 +3,24 @@
     <div class="wrapper">
       <div>
         <h3>Toll!</h3>
-        <p id="message">
+        <p id="message" @click="createInvite">
           Du hast ein Rezept gefunden!
           <br />
           <br />
           Um Freunde einzuladen oder zu sehen,
-          wer welche Zutat mitbringt, sende Ihnen diesen Link:
+          wer welche Zutat mitbringt, kannst du hier einen Link generieren:
         </p>
       </div>
-      <input type="text" :value="link" id="link" ref="link" @click="selectText">
-      <div id="copyButtonWrapper" v-clipboard:copy="link" v-clipboard:success="onCopy" v-clipboard:error="onError">
-        <input type="button" value="Kopieren">
+      <div v-if="!showLink">
+        <label>Dein Name: </label>
+        <input type="text" v-model="participantName" class="alignCenter"/>
+        <input type="button" value="Link genieren" class="button margin15" @click="createInvite" />
+      </div>
+      <div v-if="showLink">
+        <input type="text" :value="link" id="link" ref="link" @click="selectText">
+        <div id="copyButtonWrapper" v-clipboard:copy="link" v-clipboard:success="onCopy" v-clipboard:error="onError">
+          <input type="button" value="Kopieren" class="button">
+        </div>
       </div>
     </div>
     <transition name="appear" enter-active-class="fadeIn" leave-active-class="fadeOut">
@@ -29,8 +36,10 @@ export default {
   name: "Invite",
   data: function () {
     return {
-      id: "abc123",
-      showHint: false
+      id: null,
+      showLink: false,
+      participantName: "",
+      showHint: false,
     }
   },
   computed: {
@@ -39,6 +48,24 @@ export default {
     }
   },
   methods: {
+    async createInvite() {
+      let availableIngredients = this.$root.$data.meal.ingredients.filter(
+        x => this.$root.$data.ingredients.find(y => y.name == x.name)
+      );
+
+      const invite = await this.$be.createInvite({
+      name: this.$root.$data.meal.name,
+      participants: [
+          {
+            name: this.participantName,
+            ingredients: availableIngredients
+          }
+        ]
+      });
+
+      this.id = invite.data.newId;
+      this.showLink = true;
+    },
     selectText(){
       this.$refs.link.select();
     },
@@ -74,6 +101,14 @@ export default {
   text-align: left;
 }
 
+.alignCenter {
+  text-align: center;
+}
+
+.margin15 {
+  margin-top: 15px;
+}
+
 #link {
   padding: 5px;
   padding-top: 15px;
@@ -91,7 +126,7 @@ export default {
   padding: 15px;
 }
 
-#copyButtonWrapper > input {
+.button {
   background: rgb(69, 126, 201);
   border-radius: 5px;
   padding: 10px;

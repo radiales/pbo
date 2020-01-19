@@ -17,27 +17,36 @@ export default new Router({
         default:    Home,
         recipeView: Recipes,
         lastView:   Last,
+        inviteView: Invite
       }
     },
     {
+      path: "/home",
+      name: "home",
+      props: true,
+      component: Home
+    },
+    {
       path: "/share",
+      name: "share",
       component: Share
     },
     {
       path: "/invite",
+      name: "invite",
       component: Invite
     },
     {
       path: "/recipes",
-      components: {
-        default: Recipes
-      }
+      name: "recipes",
+      props: true,
+      component: Recipes
     },
     {
       path: "/last",
-      components: {
-        default: Last
-      }
+      name: "last",
+      props: true,
+      component: Last
     }
   ]
 })

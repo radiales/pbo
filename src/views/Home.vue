@@ -74,7 +74,9 @@
             </div>
             <div class="form searchForm">
                 <form>
-                    <input @click="nextPage('recipes')" type="button" value="Search">
+                    <router-link @click.native="$root.$data.ingredients = availableIngredients" :to="{ name: 'recipes' }">
+                        <input type="button" value="Search">
+                    </router-link>
                 </form>
             </div>
         </div>
@@ -173,13 +175,18 @@ export default {
             ]
           }
     },
+    mounted() {
+        for(let ing of this.ingredients){
+            ing.available = this.$root.$data.ingredients.find(x => x.name == ing.name) != undefined;
+        }
+    },
     computed:{
         SelectedPeopleCount:{
             get: function(){
                 return this.selectedPeopleCount;
             },
             set: function(val){
-                this.selectedPeopleCount = (val > 100)?100:parseInt(val);
+                this.selectedPeopleCount = (val > 100) ? 100 : parseInt(val);
             }
         },
         Constraints:{
@@ -211,7 +218,6 @@ export default {
     },
     methods: {
       nextPage(key){
-
           this.$root.$data.ingredients = [];
           for(var i of this.availableIngredients){
               this.$root.$data.ingredients.push(i);
@@ -337,24 +343,6 @@ export default {
     width: 70%;
     backdrop-filter: blur(5px);
 }
-/*
-.constraintForm input[type="checkbox"]{
-    display: none;
-}
-
-.constraintForm input[type="checkbox"]:checked + .selectable{
-    background: rgb(69, 126, 201);
-    color: white;
-}
-
-.constraint{
-    height: 20vw;
-    width: 20vw;
-    display: inline-block;
-    padding-top: 5px;
-    margin: 5px;
-}
-*/
 
 .constraint{
     width: 30vw;
@@ -422,5 +410,4 @@ Selectable{
     border-radius: 5px;
     color: white;
 }
-
 </style>

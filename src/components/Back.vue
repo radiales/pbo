@@ -1,6 +1,8 @@
 <template>
-    <div id="container" @click="goBack">
+    <div id="container">
+      <router-link :to="{ name: page, params: propsToPass }">
         <h3>Back</h3>
+      </router-link>
     </div>
 </template>
 
@@ -11,6 +13,9 @@ export default {
     page: {
       default: "home",
       type: String
+    },
+    propsToPass: {
+      type: Object
     }
   },
   methods: {
@@ -32,8 +37,14 @@ export default {
   cursor: pointer;
 }
 
-#container > h3 {
+h3 {
   margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
   padding: 0;
 }
 </style>

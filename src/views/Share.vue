@@ -5,7 +5,7 @@
     </div>
     <div class="backgroundBlur">
       <form id="nameForm">
-        <label>Name </label>
+        <label>Name: </label>
         <input required type="text" v-model="participantName" />
       </form>
       <h4>Ich bringe mit:</h4>

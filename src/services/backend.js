@@ -4,8 +4,8 @@ export default {
     fetchRecipes(ingredients) {
         return api().post("recipes", ingredients);
     },
-    createInvite(){
-        return api().post("share?action=create");
+    createInvite(meal){
+        return api().post("share?action=create", meal);
     },
     fetchInvite(Id){
         return api().get("share", { params: { id: Id} });
