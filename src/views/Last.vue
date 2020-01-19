@@ -2,11 +2,13 @@
   <div class="Last">
     <div class="Header">
       <h1 v-if="recipe != null">{{ recipe.name }}</h1>
-      <Back :page="'recipes'" @goBack="x => $emit('goBack', x)"></Back>
+      <Back :page="'recipes'"></Back>
     </div>
-    <div class="nothingFound" v-if="recipe == null" @click="$emit('goBack', 'recipes')">
-      <span>😢</span>
-      <h4>Sorry, da ist was schief gelaufen...</h4>
+    <div class="nothingFound" v-if="recipe == null">
+      <router-link :to="{ name: 'home' }" tag="span">
+        <span>😢</span>
+        <h4>Sorry, da ist was schief gelaufen...</h4>
+      </router-link>
    </div>
     <div class="Recipe" v-if="recipe != null">
       <h3>Zutaten</h3>

@@ -2,13 +2,15 @@
   <div class="recipiesPageDiv">
       <div class="titleDiv">
         <h1 @click="getRecipes">Recipes</h1>
-        <Back :page="'home'" @goBack="x => $emit('goBack', x)"></Back>
+        <Back :page="'home'"></Back>
       </div>
       <div class="mainDiv">
         <div class="recipesGrpDiv">
-           <div class="nothingFound" v-if="meals.available.length == 0 && meals.unavailable.length == 0" @click="$emit('goBack', 'home')">
+           <div class="nothingFound" v-if="meals.available.length == 0 && meals.unavailable.length == 0">
+             <router-link :to="{ name: 'home' }" tag="span">
                <span>😢</span>
                <h4>Sorry, wir konnten keine Mahlzeiten finden die deinen Kriterien entsprechen!</h4>
+              </router-link>
            </div>
            <div v-for="(meal, id) in meals.available" :key="id" class="activeRecipeDiv">  
               <router-link @click.native="$root.$data.meal = meal" :to="{ name: 'last' }" tag="span">
@@ -31,19 +33,12 @@
 <script>
 export default {
   name: 'Recipes',
-  props: {
-    show: {
-      type: Object
-    }
-  },
   mounted() {
     this.ingredients = this.$root.$data.ingredients;
     this.getRecipes();
   },
   data: function(){
     return{
-      doShow: this.show,
-      debugRes: "",
       ingredients: null,
       meals:{
         available:[],
@@ -52,19 +47,8 @@ export default {
     }
   },
   methods:{
-    nextPage(val, meal){
-      this.$root.$data.chosenRecipe = meal;
-      this.doShow[val] = !this.doShow[val];
-		  this.doShow['recipes'] = false;
-		  this.$emit("onShowChanged", this.doShow);
-    },
-    getIngredients() {
-      // alert(this.$root.$data.ingredients);
-    },
     async getRecipes() {
-      // const response = await this.$be.fetchRecipes(this.$root.$data.ingredients);
       const response = await this.$be.fetchRecipes(this.ingredients);
-      this.debugRes = response.data;
       this.meals.unavailable = response.data["almostSuitable"];
       this.meals.available = response.data["suitable"];
     }

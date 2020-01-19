@@ -21,8 +21,6 @@ Vue.component("Selectable", Selectable);
 Vue.component("Constraint", Constraint);
 Vue.component("Back", Back);
 
-
-
 Vue.use(VueClipboard);
 
 Vue.use({

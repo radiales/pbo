@@ -2,47 +2,14 @@
   <div id="app">
     <div id="heading">
       <div id="headingWrapper">
-        <h2>MealShare</h2>
-        <h4>What do you want to eat today?</h4>
+        <router-link :to="{ name: 'home' }" tag="span">
+          <h2>MealShare</h2>
+          <h4>What do you want to eat today?</h4>
+        </router-link>
       </div>
     </div>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/recipes">Recipes</router-link> |
-      <router-link to="/last">Last</router-link>
-    </div>
     <transition name="slide-fade" mode="out-in">
-      <router-view 
-        v-if="show.home && !show.recipes && !show.last" 
-        :show="show" 
-        class="view" 
-        @onShowChanged="updateShow"
-        @goBack="goBack"
-      ></router-view>
-      <router-view 
-        v-else-if="!show.home && show.recipes && !show.last" 
-        :show="show" 
-        class="view"  
-        name="recipeView" 
-        @onShowChanged="updateShow"
-        @goBack="goBack"
-      ></router-view>
-      <router-view 
-        v-else-if="!show.home && !show.recipes && show.last" 
-        :show="show" 
-        class="view" 
-        name="lastView" 
-        @onShowChanged="updateShow"
-        @goBack="goBack"
-      ></router-view>
-      <router-view 
-        v-else-if="!show.home && !show.recipes && !show.last" 
-        :show="show" 
-        class="view" 
-        name="lastView" 
-        @onShowChanged="updateShow"
-        @goBack="goBack"
-      ></router-view>
+      <router-view ></router-view>
     </transition>
   </div>
 </template>
@@ -58,7 +25,6 @@ body{
   height: 200vh;
   background-image: url("../img/bg_new.png");
   background-attachment: fixed;
-  /* background-size: 50%; */
 }
 
 #homeSection{
@@ -129,7 +95,6 @@ body{
   text-align: left;
   height: 15vh;
   background-image: url("../img/food_illustration.jpg");
-  /* background-size: 100%; */
   background-attachment: fixed;
 }
 
@@ -168,26 +133,6 @@ body{
 
 <script>
 export default{
-  methods:{
-    updateShow(val){
-      this.show = val;
-    }, 
-    goBack(page) {
-      Object.keys(this.show).forEach(
-        x => this.show[x] = (x == page) ? true : false
-      )
-    }
-  },
-  data:function(){
-    return{
-      show: {
-        home:     true,
-        recipes:  false,
-        last:     false,
-        invite:   false,
-        share:    false
-      }
-    }
-  }
+  name: "App"
 }
 </script>
