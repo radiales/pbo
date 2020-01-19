@@ -1,12 +1,14 @@
 <template>
   <div class="Last">
+    <Alert v-if="notifyUpdate" :message="'Deine Änderungen wurden übernommen!'" :type="'success'"></Alert>
+    <Alert v-if="notifyError" :message="'Sorry, das ist was schief gelaufen...'" :type="'error'"></Alert>
     <div class="backgroundBlur fWeight600">
       <h2>Rezept: {{ name }}</h2>
     </div>
     <div class="backgroundBlur">
-      <form id="nameForm">
+      <form id="nameForm" name="nameForm">
         <label>Name: </label>
-        <input required type="text" v-model="participantName" />
+        <input required type="text" v-model="participantName" class="alignCenter"/>
       </form>
       <h4>Ich bringe mit:</h4>
          <transition-group mode="out-in" name="fade" tag="ul" class="partUl">
@@ -32,7 +34,7 @@
         </transition-group>
     </div>
     <div class="backgroundBlur" id="participantsWrapper">
-      <h3>Wer bringt was mit:</h3>
+      <h3>Teilnehmer:</h3>
       <div class="participant" 
         v-for="(part, id) in participants" 
         :key="id">
@@ -50,7 +52,7 @@
     </div>
     <div>
       <div class="form searchForm">
-        <input @click="update" :style="UnsavedChanges" type="submit" value="Update" form="nameForm"/>
+        <input @click="update" :style="UnsavedChanges" type="button" value="Update" form="nameForm"/>
       </div>
     </div>
   </div>
@@ -65,6 +67,8 @@ export default {
       unsavedChanges: false,
       participantName: "",
       name: "",
+      notifyUpdate: false,
+      notifyError: false,
       ingredientsToBring: [],
       ingredientsNeeded: [
         {
@@ -118,6 +122,14 @@ export default {
     this.fetchInvite();
   },
   methods: {
+    NotifyUpdate() {
+      this.notifyUpdate = true;
+      setTimeout(()=>this.notifyUpdate = false, 2000);
+    },
+    NotifyError() {
+      this.notifyError = true;
+      setTimeout(()=>this.notifyError = false, 2000);
+    },
     fetchInvite(){
       this.AsyncfetchInvite().then((x) => {
         this.debugInvite = x;
@@ -132,10 +144,13 @@ export default {
       return response.data;
     },
     update(){
-      this.AsyncPutInvite().then(x => alert(x.error ? "Fehler" : "Fertig!"));
+      let ret = this.AsyncPutInvite();
       this.unsavedChanges = false;
 
-      setTimeout(()=>{this.fetchInvite()}, 300); //TODO: evaluate
+      if(ret.error)
+        this.NotifyUpdate();
+      else
+        this.NotifyUpdate();
     },
     async AsyncPutInvite(){
       let dataToBeAdded = {
@@ -302,5 +317,9 @@ export default {
   background: rgb(69, 126, 201);
   border-radius: 5px;
   color: white;
+}
+
+.alignCenter {
+  text-align: center;
 }
 </style>

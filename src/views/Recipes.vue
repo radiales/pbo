@@ -1,31 +1,31 @@
 <template>
   <div class="recipiesPageDiv">
-      <div class="titleDiv">
-        <h1 @click="getRecipes">Recipes</h1>
-        <Back :page="'home'"></Back>
-      </div>
-      <div class="mainDiv">
-        <div class="recipesGrpDiv">
-           <div class="nothingFound" v-if="meals.available.length == 0 && meals.unavailable.length == 0">
-             <router-link :to="{ name: 'home' }" tag="span">
-               <span>😢</span>
-               <h4>Sorry, wir konnten keine Mahlzeiten finden die deinen Kriterien entsprechen!</h4>
-              </router-link>
-           </div>
-           <div v-for="(meal, id) in meals.available" :key="id" class="activeRecipeDiv">  
-              <router-link @click.native="$root.$data.meal = meal" :to="{ name: 'last' }" tag="span">
-                <h3> {{ meal.name }} </h3>
-              </router-link>
-            </div>
-            <hr v-if="meals.available.length > 0 && meals.unavailable.length > 0" />
-            <div v-for="(meal, id) in meals.unavailable" :key="id" class="inactiveRecipeDiv">
-              <router-link @click.native="$root.$data.meal = meal" :to="{ name: 'last' }" tag="span">
-                <h3> {{ meal.name }} </h3>
-                <span class="missingIngredients">{{ meal.missing.map(x => x.name).slice(0, 3).join(", ") + ((meal.missing.length > 3) ? ", ..." : "") }}</span>
-              </router-link>
-            </div>
+    <div class="titleDiv">
+      <h1 @click="getRecipes">Recipes</h1>
+      <Back :page="'home'"></Back>
+    </div>
+    <div class="mainDiv">
+      <div class="recipesGrpDiv">
+        <div class="nothingFound" v-if="meals.available.length == 0 && meals.unavailable.length == 0">
+          <router-link :to="{ name: 'home' }" tag="span">
+            <span>😢</span>
+            <h4>Sorry, wir konnten keine Mahlzeiten finden die deinen Kriterien entsprechen!</h4>
+           </router-link>
         </div>
+        <div v-for="(meal, id) in meals.available" :key="id" class="activeRecipeDiv">  
+          <router-link @click.native="$root.$data.meal = meal" :to="{ name: 'last' }" tag="span">
+            <h3> {{ meal.name }} </h3>
+          </router-link>
+         </div>
+         <hr v-if="meals.available.length > 0 && meals.unavailable.length > 0" />
+         <div v-for="(meal, id) in meals.unavailable" :key="id" class="inactiveRecipeDiv">
+          <router-link @click.native="$root.$data.meal = meal" :to="{ name: 'last' }" tag="span">
+            <h3> {{ meal.name }} </h3>
+            <span class="missingIngredients">{{ meal.missing.map(x => x.name).slice(0, 3).join(", ") + ((meal.missing.length > 3) ? ", ..." : "") }}</span>
+          </router-link>
+         </div>
       </div>
+    </div>
   </div>    
   
 </template>

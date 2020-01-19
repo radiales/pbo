@@ -1,5 +1,8 @@
 <template>
   <div id="container">
+    <Alert v-if="notifyCopy" :message="'Kopiert!'" :type="'success'"></Alert>
+    <Alert v-if="notifyCreate" :message="'Invite erstellt!'" :type="'success'"></Alert>
+    <Alert v-if="notifyError" :message="'Sorry, da ist was schief gelaufen...'" :type="'error'"></Alert>
     <div class="wrapper">
       <div>
         <h3>Toll!</h3>
@@ -23,11 +26,6 @@
         </div>
       </div>
     </div>
-    <transition name="appear" enter-active-class="fadeIn" leave-active-class="fadeOut">
-      <div id="hint" v-if="showHint">
-        Kopiert!
-      </div>
-    </transition>>
   </div>
 </template>
 
@@ -40,6 +38,9 @@ export default {
       showLink: false,
       participantName: "",
       showHint: false,
+      notifyCopy: false,
+      notifyCreate: false,
+      notifyError: false
     }
   },
   computed: {
@@ -63,6 +64,8 @@ export default {
         ]
       });
 
+      this.notifyCreate = true;
+
       this.id = invite.data.newId;
       this.showLink = true;
     },
@@ -70,11 +73,10 @@ export default {
       this.$refs.link.select();
     },
     onCopy: function (e) {
-      this.showHint = true;
-      setTimeout(()=>this.showHint=false, 800);
+      this.notifyCopy = true;
     },
     onError: function () {
-        alert('Failed')
+        this.notifyError = true;
     }
   }
 }
@@ -134,36 +136,5 @@ export default {
   width: 80%;
   font-weight: 600;
   border: 0;
-}
-
-#hint {
-  position: fixed;
-  background: rgba(225,225,225,1);
-  padding: 15px;
-  font-size: 16pt;
-  border-radius: 15px;
-  width: 40vw;
-  font-weight: 600;
-  top: 40vh;
-  border: #aaa 2px solid;
-}
-
-@keyframes appear {
-  0%, 100%{
-    opacity: 0;
-    display: none;
-  }
-  20%, 70%{
-    opacity: 1;
-    display: block;
-  }
-}
-
-.fadeIn{
-  animation: appear 1s ease-in-out forwards;
-}
-
-.fadeOut{
-  
 }
 </style>

@@ -89,7 +89,7 @@ export default {
   data: function(){
 	  return{
 		peopleCount: [1,2,3,4,5,6],
-		selectedPeopleCount: 0,
+		selectedPeopleCount: 1,
 		tasteString: "",
 		tastes:["süß", "spicy", "herzhaft"],
 		constraints:{
@@ -107,7 +107,7 @@ export default {
 						veggie: true,
 						lactosefree: true,
 						glutenfree: true
-					},
+          },
 					available: true
 				},
 				{
@@ -176,7 +176,7 @@ export default {
 	mounted() {
 		for(let ing of this.ingredients){
 			ing.available = this.$root.$data.ingredients.find(x => x.name == ing.name) != undefined;
-		}
+    }
 	},
 	computed:{
 		SelectedPeopleCount:{
@@ -184,7 +184,8 @@ export default {
 				return this.selectedPeopleCount;
 			},
 			set: function(val){
-				this.selectedPeopleCount = (val > 100) ? 100 : parseInt(val);
+        this.selectedPeopleCount = (val > 100) ? 100 : parseInt(val);
+        this.$root.$data.selectedPeopleCount = this.selectedPeopleCount;
 			}
 		},
 		Constraints:{
@@ -199,13 +200,13 @@ export default {
 			return this.ingredients.filter(x => (x.available && this.fitsConstraints(x.constraints)));
 		},
 		unavailableIngredients(){
-				return this.ingredients.filter(x =>
-					(
-						!(x.available) &&
-						((this.filterString=="")?true:(x.name.toLowerCase().indexOf(this.filterString.toLowerCase())!=-1)) &&
-						this.fitsConstraints(x.constraints)
-					)
-				);
+			return this.ingredients.filter(x =>
+				(
+					!(x.available) &&
+					((this.filterString=="") ? true : (x.name.toLowerCase().indexOf(this.filterString.toLowerCase())!=-1)) &&
+					this.fitsConstraints(x.constraints)
+				)
+			);
 		},
 		countInputBackground(){
 			return {
@@ -223,13 +224,13 @@ export default {
 		  return fits;
 	  },
 	  changeConstraints(val){
-		if(val.name == "vegan" && val.active) this.Constraints.veggie = false;
-		this.Constraints[val.name] = val.active;
+		  if(val.name == "vegan" && val.active) this.Constraints.veggie = false;
+		  this.Constraints[val.name] = val.active;
 	  },
 	  addAvailable(event, id){
 		  for(let ingr of this.ingredients){
 			  if(ingr.name == this.unavailableIngredients[id].name){
-				  ingr.available = !(ingr.available);
+          ingr.available = !(ingr.available);
 				  return;
 			  }
 		  }
@@ -237,7 +238,7 @@ export default {
 	  addUnavailable(event, id){
 		  for(let ingr of this.ingredients){
 			  if(ingr.name == this.availableIngredients[id].name){
-				  ingr.available = !(ingr.available);
+          ingr.available = !(ingr.available);
 				  return;
 			  }
 		  }
