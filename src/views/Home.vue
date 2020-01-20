@@ -216,33 +216,33 @@ export default {
     }
   },
   methods: {
-  fitsConstraints(con) {
-    let fits = true;
-    Object.keys(con).forEach(c => {
-      fits = fits && ((con[c] == this.Constraints[c]) || !this.Constraints[c])
-    });
-    return fits;
-  },
-  changeConstraints(val){
-    if(val.name == "vegan" && val.active) this.Constraints.veggie = false;
-    this.Constraints[val.name] = val.active;
-  },
-  addAvailable(event, id){
-    for(let ingr of this.ingredients){
-      if(ingr.name == this.unavailableIngredients[id].name){
-        ingr.available = !(ingr.available);
-      return;
-    }
-  }
-  },
-  addUnavailable(event, id){
-    for(let ingr of this.ingredients){
-      if(ingr.name == this.availableIngredients[id].name){
-        ingr.available = !(ingr.available);
+    fitsConstraints(con) {
+      let fits = true;
+      Object.keys(con).forEach(c => {
+        fits = fits && ((con[c] == this.Constraints[c]) || !this.Constraints[c])
+      });
+      return fits;
+    },
+    changeConstraints(val){
+      if(val.name == "vegan" && val.active) this.Constraints.veggie = false;
+      this.Constraints[val.name] = val.active;
+    },
+    addAvailable(event, id){
+      for(let ingr of this.ingredients){
+        if(ingr.name == this.unavailableIngredients[id].name){
+          ingr.available = !(ingr.available);
         return;
       }
     }
-  }
+    },
+    addUnavailable(event, id){
+      for(let ingr of this.ingredients){
+        if(ingr.name == this.availableIngredients[id].name){
+          ingr.available = !(ingr.available);
+          return;
+        }
+      }
+    }
   },
 }
 </script>

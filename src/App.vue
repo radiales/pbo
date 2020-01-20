@@ -22,7 +22,8 @@ body{
   padding: 0;
   position: absolute;
   top: 0;
-  height: 200vh;
+  height: fit-content;
+  padding-bottom: 100px;
   background-image: url("../img/bg_new.png");
   background-attachment: fixed;
 }

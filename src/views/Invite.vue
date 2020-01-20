@@ -1,8 +1,8 @@
 <template>
   <div id="container">
-    <Alert v-if="notifyCopy" :message="'Kopiert!'" :type="'success'"></Alert>
-    <Alert v-if="notifyCreate" :message="participantName + ', dein Invite wurde erstellt!'" :type="'success'"></Alert>
-    <Alert v-if="notifyError" :message="'Sorry, da ist was schief gelaufen...'" :type="'error'"></Alert>
+    <Alert v-if="notifyCopy" :message="'Kopiert!'" :type="'success'" :offsetVertical="-40"></Alert>
+    <Alert v-if="notifyCreate" :message="participantName + ', dein Invite wurde erstellt!'" :type="'success'" :offsetVertical="-40"></Alert>
+    <Alert v-if="notifyError" :message="'Sorry, da ist was schief gelaufen...'" :type="'error'" :offsetVertical="-40"></Alert>
     <div class="wrapper">
       <div>
         <h3>Toll!</h3>
@@ -59,7 +59,8 @@ export default {
       participants: [
           {
             name: this.participantName,
-            ingredients: availableIngredients
+            ingredients: availableIngredients,
+            multiplicator: this.$root.$data.selectedPeopleCount
           }
         ]
       });

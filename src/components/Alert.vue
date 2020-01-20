@@ -1,6 +1,6 @@
 <template>
   <div id="spread">
-    <div id="window">
+    <div id="window" :style="OffsetVertical">
       <h3 id="title" :style="headingStyle"> {{ Heading }}</h3>
       <p id="message"> {{ message }}</p>
     </div>
@@ -18,6 +18,10 @@ export default {
     type: {
       type: String,
       default: "info"
+    },
+    offsetVertical: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
@@ -31,6 +35,11 @@ export default {
       }
 
       return type;
+    },
+    OffsetVertical() {
+      return {
+        "transform" : "translateY(" + this.offsetVertical + "%)"
+      }
     },
     Heading() {
       let heading = "";

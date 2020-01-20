@@ -13,13 +13,13 @@
            </router-link>
         </div>
         <div v-for="(meal, id) in meals.available" :key="id" class="activeRecipeDiv">  
-          <router-link @click.native="$root.$data.meal = meal" :to="{ name: 'last' }" tag="span">
+          <router-link @click.native="AddMeal(meal)" :to="{ name: 'last' }" tag="span">
             <h3> {{ meal.name }} </h3>
           </router-link>
          </div>
          <hr v-if="meals.available.length > 0 && meals.unavailable.length > 0" />
          <div v-for="(meal, id) in meals.unavailable" :key="id" class="inactiveRecipeDiv">
-          <router-link @click.native="$root.$data.meal = meal" :to="{ name: 'last' }" tag="span">
+          <router-link @click.native="AddMeal(meal)" :to="{ name: 'last' }" tag="span">
             <h3> {{ meal.name }} </h3>
             <span class="missingIngredients">{{ meal.missing.map(x => x.name).slice(0, 3).join(", ") + ((meal.missing.length > 3) ? ", ..." : "") }}</span>
           </router-link>
@@ -47,6 +47,10 @@ export default {
     }
   },
   methods:{
+    AddMeal(meal){
+      this.$root.$data.meal = meal;
+      this.$root.$data.meal.ingredients.map(x => x.amount *= this.$root.$data.selectedPeopleCount);
+    },
     async getRecipes() {
       const response = await this.$be.fetchRecipes(this.ingredients);
       this.meals.unavailable = response.data["almostSuitable"];
