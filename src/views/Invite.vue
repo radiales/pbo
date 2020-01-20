@@ -56,11 +56,11 @@ export default {
 
       const invite = await this.$be.createInvite({
       name: this.$root.$data.meal.name,
-      multiplicator: this.$root.$data.selectedPeopleCount,
       participants: [
           {
             name: this.participantName,
             ingredients: availableIngredients,
+            multiplicator: this.$root.$data.selectedPeopleCount
           }
         ]
       });

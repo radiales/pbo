@@ -36,7 +36,7 @@
           <span class="availabilityLabel">Ausgewählt:</span>
           <transition-group name="fade" tag="div" class="chosen ingredientsGroup">
             <span
-              v-for="(ingredient, id) in chosenIngredients"
+              v-for="(ingredient, id) in availableIngredients"
               :key="id"
               :id="id"
               @click="addUnavailable($event, id)">
@@ -52,7 +52,7 @@
         <div class="ingredients availableParent">
           <span class="availabilityLabel">Verfügbar</span>
           <form>
-            <input class="textInput" v-model="filterString" @input="fetchSpecificIngredient" type="text" placeholder="Suchen...">
+            <input class="textInput" v-model="filterString" type="text" placeholder="Suchen...">
           </form>
           <div class="available ingredientsGroup">
             <transition-group name="fade" tag="div" class="chosen ingredientsGroup">
@@ -99,7 +99,6 @@ export default {
         lactosefree: false
       },
       filterString: "",
-      chosenIngredients: [],
       ingredients: [
         {
           name: "Tomaten",
@@ -175,20 +174,8 @@ export default {
     }
   },
   mounted() {
-    if(this.$root.$data.ingredients.length == 0) {
-      this.ingredients = [];
-      this.FetchRandomIngredients().then( x => {
-        x.forEach(y => { 
-            if(y != undefined && y != "undefined" && y != null) 
-              this.ingredients.push(
-                {name: y[0].toUpperCase() + y.substr(1), available: false
-              })
-          });
-      });
-    } else {
-      for(let ing of this.ingredients){
-        ing.available = this.$root.$data.ingredients.find(x => x.name == ing.name) != undefined;
-      }
+    for(let ing of this.ingredients){
+      ing.available = this.$root.$data.ingredients.find(x => x.name == ing.name) != undefined;
     }
   },
   computed:{
@@ -216,7 +203,7 @@ export default {
       return this.ingredients.filter(x =>
         (
           !(x.available) &&
-          //((this.filterString=="") ? true : (x.name.toLowerCase().indexOf(this.filterString.toLowerCase())!=-1)) &&
+          ((this.filterString=="") ? true : (x.name.toLowerCase().indexOf(this.filterString.toLowerCase())!=-1)) &&
           this.fitsConstraints(x.constraints)
         )
       );
@@ -229,72 +216,34 @@ export default {
     }
   },
   methods: {
-    fetchSpecificIngredient() {
-      if(this.filterString != "") {
-        this.FetchSpecificIngredient(this.filterString).then(x => {
-          this.ingredients = [];
-          
-          if(x.length > 0) {
-            x.forEach(y => {
-              this.ingredients.push({ name: y[0].toUpperCase() + y.substr(1), available: false });
-            });
-          }
-        });
-      } else {
-        this.FetchRandomIngredients().then( x => {
-        x.forEach(y => { 
-            if(y != undefined && y != "undefined" && y != null) 
-              this.ingredients.push(
-                {name: y[0].toUpperCase() + y.substr(1), available: false
-              })
-          });
-      });
-      }
-    },
-    async FetchSpecificIngredient(name) {
-      const specificIngredient = await this.$be.findIngredient(name);
-
-      return specificIngredient.data;
-    },
-    async FetchRandomIngredients() {
-      const randomIngredients = await this.$be.fetchRandomIngredients(10);
-
-      return randomIngredients.data;
-    },
     fitsConstraints(con) {
-      // let fits = true;
-      // Object.keys(con).forEach(c => {
-      //   fits = fits && ((con[c] == this.Constraints[c]) || !this.Constraints[c])
-      // });
-      // return fits;
-
-      return true;
+      let fits = true;
+      Object.keys(con).forEach(c => {
+        fits = fits && ((con[c] == this.Constraints[c]) || !this.Constraints[c])
+      });
+      return fits;
     },
     changeConstraints(val){
       if(val.name == "vegan" && val.active) this.Constraints.veggie = false;
       this.Constraints[val.name] = val.active;
     },
     addAvailable(event, id){
-      // for(let ingr of this.ingredients){
-      //   if(ingr.name == this.unavailableIngredients[id].name){
-      //     ingr.available = !(ingr.available);
-      //   return;
-      // }
-      this.chosenIngredients.push(this.ingredients[id]);
-      this.chosenIngredients[this.chosenIngredients.length - 1].available = true;
-      //}
+      for(let ingr of this.ingredients){
+        if(ingr.name == this.unavailableIngredients[id].name){
+          ingr.available = !(ingr.available);
+        return;
+      }
+    }
     },
     addUnavailable(event, id){
-      // for(let ingr of this.ingredients){
-      //   if(ingr.name == this.availableIngredients[id].name){
-      //     ingr.available = !(ingr.available);
-      //     return;
-      //   }
-      // }
-      this.chosenIngredients[id].available = false;
-      this.chosenIngredients.splice(id, 1);
+      for(let ingr of this.ingredients){
+        if(ingr.name == this.availableIngredients[id].name){
+          ingr.available = !(ingr.available);
+          return;
+        }
+      }
     }
-  }
+  },
 }
 </script>
 

@@ -1,12 +1,6 @@
 import api from "@/services/api.js";
 
 export default {
-    fetchRandomIngredients(Count) {
-        return api().get("ingredients", { params: { count: Count} });
-    },
-    findIngredient(constraint) {
-        return api().get("ingredient", { params: { name: constraint }});
-    },
     fetchRecipes(ingredients) {
         return api().post("recipes", ingredients);
     },
