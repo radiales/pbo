@@ -63,52 +63,14 @@ export default {
   name: "Share",
   data: function() {
     return {
-      debugInvite: "",
       unsavedChanges: false,
       participantName: "",
       name: "",
       notifyUpdate: false,
       notifyError: false,
       ingredientsToBring: [],
-      ingredientsNeeded: [
-        {
-          name: "Tomatenmark",
-          amount: 1,
-          unit: ""
-        },
-        {
-          name: "Sahne",
-          amount: 150,
-          unit: "ml"
-        }
-      ],
-      participants: [
-        {
-          name: "Julius",
-          ingredients: [
-            {
-              name: "Tomaten",
-              amount: 1,
-              unit: ""
-            },
-            {
-              name: "Tomatenmark",
-              amount: 1,
-              unit: ""
-            }
-          ]
-        },
-        {
-          name: "Wlad",
-          ingredients: [
-            {
-              name: "Sahne",
-              amount: 150,
-              unit: "ml"
-            }
-          ]
-        }
-      ]
+      ingredientsNeeded: [],
+      participants: []
     }
   },
   computed: {
@@ -132,7 +94,6 @@ export default {
     },
     fetchInvite(){
       this.AsyncfetchInvite().then((x) => {
-        this.debugInvite = x;
         this.name = x.name;
         this.ingredientsNeeded = x.ingredientsNeeded;
         this.participants = x.participants;
@@ -148,9 +109,12 @@ export default {
       this.unsavedChanges = false;
 
       if(ret.error)
+        this.NotifyError();
+      else {
         this.NotifyUpdate();
-      else
-        this.NotifyUpdate();
+        this.participants.push({ name: this.participantName, ingredients: this.ingredientsToBring });
+        this.ingredientsToBring = [];
+      }
     },
     async AsyncPutInvite(){
       let dataToBeAdded = {
