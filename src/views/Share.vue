@@ -3,7 +3,7 @@
     <Alert v-if="notifyUpdate" :message="'Deine Änderungen wurden übernommen!'" :type="'success'"></Alert>
     <Alert v-if="notifyError" :message="'Sorry, das ist was schief gelaufen...'" :type="'error'"></Alert>
     <div class="backgroundBlur fWeight600">
-      <h2>Rezept: {{ name }}</h2>
+      <h2>Rezept: <a :href="'/last?name=' + name">{{ name }} <LinkSymbol></LinkSymbol></a></h2>
     </div>
     <div class="backgroundBlur">
       <form id="nameForm" name="nameForm">

@@ -2,7 +2,7 @@
   <div class="Last">
     <div class="Header">
       <h1 v-if="recipe != null">{{ recipe.name }}</h1>
-      <Back :page="'recipes'"></Back>
+      <Back v-if="showInviteButton" :page="'recipes'"></Back>
     </div>
     <div class="nothingFound" v-if="recipe == null">
       <router-link :to="{ name: 'home' }" tag="span">
@@ -22,7 +22,7 @@
         <li v-for="(step, id) in recipe.description.split('\n')" :key="id" class="step">{{ step }}</li>
       </ol>
     </div>
-    <div class="form searchForm">
+    <div v-if="showInviteButton" class="form searchForm">
       <form>
         <router-link :to="{ name: 'invite' }">
           <input type="button" value="Einladen">
@@ -38,7 +38,8 @@
     data: function()
     {
       return {
-        recipe: null
+        recipe: null,
+        showInviteButton: true
       }
     },
     methods: {
@@ -46,10 +47,22 @@
         return {
           "color": this.recipe.missing.map(x => x.name).includes(i.name) ? "rgb(167, 0, 0)" : "inherit"
         };
+      },
+      async getRecipe(name) {
+        const response = await this.$be.fetchRecipe(name);
+        if(!response.data.error)
+          this.recipe = response.data;
+        this.recipe.missing = [];
+
+        this.showInviteButton = false;
       }
     },
     mounted() {
-      this.recipe = this.$root.$data.meal;
+      if(this.$root.$data.meal)
+        this.recipe = this.$root.$data.meal;
+      else if(this.$route.query.name){
+        this.getRecipe(this.$route.query.name);
+      }
     }
 	}
 </script>

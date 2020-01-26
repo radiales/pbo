@@ -1,6 +1,9 @@
 import api from "@/services/api.js";
 
 export default {
+    fetchRecipe(Name){
+        return api().get("recipe", { params: { name:  Name} });
+    },
     fetchRecipes(ingredients) {
         return api().post("recipes", ingredients);
     },

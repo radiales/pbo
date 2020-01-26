@@ -8,6 +8,7 @@ import Selectable from "@/components/Selectable"
 import Constraint from "@/components/Constraint"
 import Back from "@/components/Back.vue"
 import Alert from "@/components/Alert.vue"
+import LinkSymbol from "@/components/LinkSymbol"
 
 Vue.config.productionTip = false
 
@@ -22,6 +23,7 @@ Vue.component("Selectable", Selectable);
 Vue.component("Constraint", Constraint);
 Vue.component("Back", Back);
 Vue.component("Alert", Alert);
+Vue.component("LinkSymbol", LinkSymbol);
 
 Vue.use(VueClipboard);
 
