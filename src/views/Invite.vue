@@ -1,8 +1,8 @@
 <template>
   <div id="container">
-    <Alert v-if="notifyCopy" :message="'Kopiert!'" :type="'success'" :offsetVertical="-40"></Alert>
-    <Alert v-if="notifyCreate" :message="participantName + ', dein Invite wurde erstellt!'" :type="'success'" :offsetVertical="-40"></Alert>
-    <Alert v-if="notifyError" :message="'Sorry, da ist was schief gelaufen...'" :type="'error'" :offsetVertical="-40"></Alert>
+    <Alert v-if="notifications.notifyCopy" :message="'Kopiert!'" :type="'success'" :offsetVertical="-40"></Alert>
+    <Alert v-if="notifications.notifyCreate" :message="participantName + ', dein Invite wurde erstellt!'" :type="'success'" :offsetVertical="-40"></Alert>
+    <Alert v-if="notifications.notifyError" :message="'Sorry, da ist was schief gelaufen...'" :type="'error'" :offsetVertical="-40"></Alert>
     <div class="wrapper">
       <div>
         <h3>Toll!</h3>
@@ -38,9 +38,11 @@ export default {
       showLink: false,
       participantName: "",
       showHint: false,
-      notifyCopy: false,
-      notifyCreate: false,
-      notifyError: false
+      notifications: {
+        notifyCopy: false,
+        notifyCreate: false,
+        notifyError: false
+      }
     }
   },
   computed: {
@@ -65,19 +67,26 @@ export default {
         ]
       });
 
-      this.notifyCreate = true;
+      this.notify("notifyCreate");
 
       this.id = invite.data.newId;
       this.showLink = true;
+    },
+    notify(name){
+      Object.keys(this.notifications).forEach(
+        x => this.notifications[x] = false
+      );
+
+      this.notifications[name] = true;
     },
     selectText(){
       this.$refs.link.select();
     },
     onCopy: function () {
-      this.notifyCopy = true;
+      this.notify("notifyCopy");
     },
     onError: function () {
-        this.notifyError = true;
+      this.notify("notifyError");
     }
   }
 }
